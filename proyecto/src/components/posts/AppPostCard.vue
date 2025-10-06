@@ -3,7 +3,7 @@ import AppPostList from './AppPostList.vue';
 
 export default {
   // 1. Nombre y Rol
-  name: "PostCard", 
+  name: "AppPostCard", 
   components: {AppPostList},
   
   // 2. Propiedades (Props)

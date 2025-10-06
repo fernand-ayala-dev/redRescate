@@ -17,11 +17,12 @@ export default {
   },
 
   methods: {
+ 
     async handleSendMessage(message) {
       try {
         const newPost = await sendNewGlobalPostMessages(message);
         if (newPost) {
-          // Agregamos el mensaje al inicio del array
+          // Agregar el mensaje al inicio del array
           this.messages.unshift(newPost);
         }
       } catch (error) {
@@ -40,7 +41,10 @@ export default {
 </script>
 
 <template>
-  <div class="flex gap-4">
+  <div class="">
+    <section>
+      <AppPostForm @send-message="handleSendMessage" />
+    </section>
     <section
       class="overflow-auto w-9/12 h-100 p-4 border border-gray-200 rounded"
     >
@@ -63,8 +67,7 @@ export default {
         </li>
       </ol>
     </section>
-    <section class="w-3/12">
-      <AppPostForm @send-message="handleSendMessage" />
-    </section>
+    
   </div>
+ 
 </template>

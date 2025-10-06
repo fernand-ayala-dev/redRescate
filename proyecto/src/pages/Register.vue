@@ -1,17 +1,13 @@
-<template>
-  <AppH1>Registro</AppH1>
-  <!-- auth.JS -->
-</template>
-
 <script>
-import AppH1 from '../components/AppH1.vue';
+import AppH1 from "../components/AppH1.vue";
+import AppRegister from "../components/auth/AppRegister.vue";
 
 export default {
   name: "Register",
-  components: { AppH1 },
+  components: { AppH1, AppRegister },
 };
 </script>
-
-<style scoped>
-/* opcional */
-</style>
+<template>
+  <AppH1>Register</AppH1>
+  <AppRegister></AppRegister>
+</template>
