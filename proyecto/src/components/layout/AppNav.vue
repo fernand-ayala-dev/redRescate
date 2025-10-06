@@ -24,7 +24,9 @@ export default {
       <li class="">
         <RouterLink class="p-2 rounded-sm hover:bg-lime-600 focus:outline-2 focus:outline-offset-2 focus:outline-lime-500 focus:bg-lime-600 focus:text-amber-50" to="/miPerfil">Mi perfil</RouterLink>
       </li>
-    
+      <li class="">
+        <RouterLink class="p-2 rounded-sm hover:bg-lime-600 focus:outline-2 focus:outline-offset-2 focus:outline-lime-500 focus:bg-lime-600 focus:text-amber-50" to="/registrarse">crearUsuario</RouterLink>
+      </li>
     </ul>
   </nav>
 </template>
