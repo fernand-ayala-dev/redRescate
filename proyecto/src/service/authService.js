@@ -1,5 +1,5 @@
 import { supabase } from "./supabase";
-import { getUserProfileById, createUserProfile } from "./userService.js";
+import { getUserProfileById, createUserProfile,updateUserProfile } from "./userService.js";
 
 let user = {
   id: null,
@@ -16,6 +16,7 @@ if (localStorage.getItem("user")) {
 }
 
 loadCurrentUserAuthState();
+
 
 async function loadCurrentUserAuthState() {
   const { data, error } = await supabase.auth.getUser();
@@ -51,11 +52,12 @@ export async function register(email, password) {
 
     if (error) {
       throw new Error("Error al crear usuario: " + error.message);
+   
     }
 
     console.log("Usuario registrado con éxito.", data);
 
-    // Crear el perfil del usuario en tabla "profiles"
+    // Crear el perfil del usuario en tabla "my_profile"
     await createUserProfile({
       id: data.user.id,
       email: data.user.email,
@@ -67,7 +69,7 @@ export async function register(email, password) {
       email: data.user.email,
     });
   } catch (error) {
-    console.error("Error en register():", error.message);
+    console.error("Error al registrar usuario:", error.er);
   }
 }
 
@@ -107,15 +109,17 @@ export async function logout() {
   });
 }
 
-export async function updateUserProfile(data) {
+export async function updateAuthProfile(data) {
   try {
     await updateUserProfile(user.id, data);
 
     setUser(data);
   } catch (error) {
-    //TODO
+    console.error("Error al actualizar usuario:", error.er);
   }
 }
+
+
 /**
  * Observer
  *Registrar al usuario
@@ -126,7 +130,13 @@ export async function updateUserProfile(data) {
 export function subscribeToAuthStateChanges(callback) {
   observers.push(callback);
 
+  console.log("controlando mis observers" , observers);
   notify(callback);
+
+  return ()=> {
+    observers= observers.filter(obs => callback !== obs);
+      console.log("observers removido" , observers);
+  }
 }
 
 /**
@@ -144,6 +154,10 @@ function notifyAll() {
   observers.forEach(notify);
 }
 
+/**
+ * 
+ * @param {*} data 
+ */
 function setUser(data) {
   user = {
     ...user,

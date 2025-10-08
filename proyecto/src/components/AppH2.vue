@@ -6,5 +6,5 @@ export default {
 </script>
 
 <template>
-<h1 class="p-4 text-4xl sm:text-5xl font-extrabold leading-tight"><slot/></h1>
+<h2 class="p-4 text-4xl sm:text-2xl font-extrabold leading-tight"><slot/></h2>
 </template>

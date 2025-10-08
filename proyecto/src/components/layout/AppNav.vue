@@ -4,6 +4,7 @@ import {
   logout,
 } from "../../service/authService.js";
 
+
 export default {
   name: "AppNav",
   data() {
@@ -18,7 +19,7 @@ export default {
     handleLogout() {
       logout();
 
-       this.$router.push('/iniciar');
+       this.$router.push('/');
       this.user.email='';
       this.user.password='';
     }
@@ -33,51 +34,74 @@ export default {
 };
 </script>
 <template>
-  <nav class="flex items-center p-4 gap-8 bg-lime-200">
-    <RouterLink class="text-xl" to="/">Red</RouterLink>
+  <nav class="h-15 flex items-center justify-between p-4 bg-lime-800">
+   
+    <div class="flex items-center gap-3">
+      <img
+        src="/logo-selva.png"
+        alt="Logo Selva"
+        class="h-[50px] w-auto object-contain"
+      />
+      <RouterLink to="/" class="text-2xl font-semibold text-white">
+        RedRescate
+      </RouterLink>
+    </div>
 
-    <ul class="flex gap-4">
-      <li class="">
+   
+    <ul class="mt-2 flex gap-4 text-white">
+      <li>
         <RouterLink
           class="p-2 rounded-sm hover:bg-lime-600 focus:outline-2 focus:outline-offset-2 focus:outline-lime-500 focus:bg-lime-600 focus:text-amber-50"
           to="/"
-          >Home</RouterLink
         >
+          Home
+        </RouterLink>
       </li>
+
       <template v-if="user.id === null">
-        <li class="">
+        <li>
           <RouterLink
             class="p-2 rounded-sm hover:bg-lime-600 focus:outline-2 focus:outline-offset-2 focus:outline-lime-500 focus:bg-lime-600 focus:text-amber-50"
             to="/iniciar"
-            >Ingresar</RouterLink
           >
+            Ingresar
+          </RouterLink>
         </li>
-        <li class="">
+        <li>
           <RouterLink
             class="p-2 rounded-sm hover:bg-lime-600 focus:outline-2 focus:outline-offset-2 focus:outline-lime-500 focus:bg-lime-600 focus:text-amber-50"
             to="/registrarse"
-            >Registrarse</RouterLink
           >
+            Registrarse
+          </RouterLink>
         </li>
       </template>
+
       <template v-else>
-        <li class="">
+        <li>
           <RouterLink
             class="p-2 rounded-sm hover:bg-lime-600 focus:outline-2 focus:outline-offset-2 focus:outline-lime-500 focus:bg-lime-600 focus:text-amber-50"
             to="/miPerfil"
-            >Mi perfil</RouterLink
           >
-        </li>
-        <li class="">
-          <RouterLink
-            class="p-2 rounded-sm hover:bg-lime-600 focus:outline-2 focus:outline-offset-2 focus:outline-lime-500 focus:bg-lime-600 focus:text-amber-50"
-            to="/publicar"
-            >Publicar</RouterLink
-          >
+            Mi perfil
+          </RouterLink>
         </li>
         <li>
-          <form action="#" @submit.prevent="handleLogout">
-            <button type="submit">{{ user.email }} (Cerrar sesión)</button>
+          <RouterLink
+            class="p-2 rounded-sm hover:bg-lime-600 focus:outline-2 focus:outline-offset-2 focus:outline-lime-500 focus:bg-lime-600 focus:text-amber-50"
+            to="/publicaciones"
+          >
+            Muro
+          </RouterLink>
+        </li>
+        <li>
+          <form @submit.prevent="handleLogout">
+            <button
+              type="submit"
+              class="p-2 rounded-sm bg-amber-300 text-lime-950 hover:bg-lime-600 focus:outline-2 focus:outline-offset-2 focus:outline-lime-500 focus:bg-lime-600 focus:text-amber-50"
+            >
+              {{ user.email }} (Cerrar sesión)
+            </button>
           </form>
         </li>
       </template>

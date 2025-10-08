@@ -14,6 +14,10 @@ export default {
   },
   methods: {
     async handleRegister() {
+       if (!this.user.email || !this.user.password) {
+      alert("Por favor, completa todos los campos antes de registrarte.");
+      return;
+    }
       try {
         this.loading=true;
         await register(this.user.email, this.user.password);

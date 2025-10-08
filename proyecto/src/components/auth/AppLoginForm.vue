@@ -1,5 +1,5 @@
 <script>
-import {login} from "../../service/authService.js"
+import { login } from "../../service/authService.js";
 export default {
   name: "ApploginForm",
   data() {
@@ -16,16 +16,15 @@ export default {
   methods: {
     async handleSubmit() {
       try {
-        this.loading=true;
+        this.loading = true;
         await login(this.user.email, this.user.password);
-        this.$router.push('/miPerfil');
-        
+        this.$router.push("/publicaciones");
       } catch (error) {
-        console.log("error de registro")
+        this.$router.push("/registrarse")
+        console.log("error de registro");
       }
-      this.loading=false;
+      this.loading = false;
     },
-
   },
 };
 </script>
@@ -50,12 +49,20 @@ export default {
         v-model="user.password"
       />
     </div>
+    <div class="flex flex-wrap gap-3">
+      <button
+        type="submit"
+        class="inline-block px-5 py-3 bg-emerald-600 text-white rounded-lg shadow hover:bg-emerald-700 transition"
+      >
+        Ingresar
+      </button>
 
-    <button
-      type="submit"
-      class="transition px-4 py-2 rounded cursor-pointer bg-blue-600 hover:bg-blue-500 focus:bg-blue-500 active:bg-blue-700 text-white"
-    >
-      Ingresar
-    </button>
+      <RouterLink
+        to="/registrarse"
+        class="inline-block px-5 py-3 bg-emerald-600 text-white rounded-lg shadow hover:bg-emerald-700 transition"
+      >
+        Registrate
+      </RouterLink>
+    </div>
   </form>
 </template>

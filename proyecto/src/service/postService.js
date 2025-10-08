@@ -1,21 +1,25 @@
 import { supabase } from "./supabase";
 /**
  * 
- * @param {{email:String, content:String}}data 
+ * @param {{send_id: String,email:String, content:String, avata:String}}data 
  */
-export async function sendNewGlobalPostMessages({ email, content }) {
+export async function sendNewGlobalPostMessages({send_id, email, content}) {
   const { data, error } = await supabase
     .from("global_publicaciones_messages")
     .insert({
+      send_id,
       email,
       content,
+      
     })
-    .select();
+    .select()
+    .single();
    
 
   if (error) {
     console.error("Error al enviar mensaje:", error.message);
   }
+  return data;
 }
 /**
  * 
@@ -34,7 +38,21 @@ export async function fetchGlobalPostMessages() {
 
   return data;
 }
+export async function fetchUserPostMessages(userId) {
+  
+  const { data, error } = await supabase
+    .from("global_publicaciones_messages")
+    .select()
+    .eq("send_id", userId)        
+    .order("created_at", { ascending: false });
 
+  if (error) {
+    console.error("Error cargando mensajes del usuario:", error.message);
+    return [];
+  }
+
+  return data;
+}
 /**
  * 
  * @param {(newMessage: {id:String, email: String, content: String, created_at: String})=> void} callback 
@@ -54,4 +72,8 @@ export function subscribeGlobalPostMessages(callback) {
     }
   );
   chatChannel.subscribe();
+
+  return() => {
+    chatChannel.unsubscribe();
+  }
 }

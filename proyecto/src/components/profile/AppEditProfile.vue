@@ -1,56 +1,55 @@
 <script>
 
-import { updateUserProfile } from "../../service/userService";
-import AppH1 from '../AppH1.vue';
-
+import { subscribeToAuthStateChanges, updateAuthProfile } from "../../service/authService";
+import AppH1 from "../AppH1.vue";
+let unsubscribeFromAuth =() => {}
 export default {
   name: "AppEditProfile",
-  components: {AppH1},
+  components: { AppH1 },
 
-  data(){
+  data() {
     return {
-      user: {
-        id:null,
-        email:null,
-        display_name:null,
-        biografia: null,
-        avatar: null,
-      },
       formData: {
-        display_name:null,
+        display_name: null,
         biografia: null,
         avatar: null,
       },
       loading: false,
-    }
-    
+    };
   },
 
   methods: {
     async handleSumit() {
       try {
-        this.loading =true;
+        this.loading = true;
 
-        await updateUserProfile(this.formData);
-
+        await updateAuthProfile(this.formData);
       } catch (error) {
-        //TODO 
+        //TODO
       }
 
-      this.loading=false;
-    }
+      this.loading = false;
+    },
+  },
+  mounted() {
+    unsubscribeFromAuth = subscribeToAuthStateChanges((userState) => {
+      this.formData = {
+        display_name: userState.display_name,
+        biografia: userState.biografia,
+        avatar: userState.avatar,
+      };
+    });
+  },
 
+  unmounted(){
+    unsubscribeFromAuth();
   }
 };
 </script>
 
 <template>
   <AppH1>Actualizar mi perfil</AppH1>
-  <form 
-  action="#"
-  @submit.prevent="handleSumit"  
-  class="">
-    >
+  <form action="#" @submit.prevent="handleSumit">
     <div class="mb-4">
       <label for="display_name" class="block text-sm font-medium text-gray-700"
         >Nombre</label
@@ -62,7 +61,7 @@ export default {
         v-model="formData.display_name"
       />
     </div>
-       <div class="mb-4">
+    <div class="mb-4">
       <label for="avatar" class="block text-sm font-medium text-gray-700"
         >Avatar</label
       >
