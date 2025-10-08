@@ -1,7 +1,9 @@
 <script>
-import {register} from "../../service/authService.js"
+import { register } from "../../service/authService.js";
+import AppButton from "../AppButton.vue";
 export default {
   name: "AppRegister",
+  components: {AppButton},
   data() {
     return {
       user: {
@@ -10,55 +12,70 @@ export default {
       },
 
       loading: false,
+      errorMessage:"",
     };
   },
   methods: {
     async handleRegister() {
-       if (!this.user.email || !this.user.password) {
-      alert("Por favor, completa todos los campos antes de registrarte.");
-      return;
-    }
+       this.errorMessage = "";
+      if (!this.user.email || !this.user.password) {
+       this.errorMessage = "Por favor completa todos los campos.";
+        return;
+      }
       try {
-        this.loading=true;
+        this.loading = true;
         await register(this.user.email, this.user.password);
 
-        this.$router.push('/miPerfil');
-        
+        this.$router.push("/miPerfil");
       } catch (error) {
-        console.log("error de registro")
+        console.log("error de registro");
       }
-      this.loading=false;
+      this.loading = false;
     },
   },
 };
 </script>
 
 <template>
-  <form action="#" @submit.prevent="handleRegister">
-    <div class="mb-4">
-      <label for="email" class="block mb-1">Email</label>
-      <input
-        type="email"
-        id="email"
-        class="w-full p-2 border border-gray-300 rounded"
-        v-model="user.email"
+  <div
+    class="flex w-100 flex-col justify-center items-center mx-auto p-4 rounded-2xl bg-lime-800/35"
+  >
+    <div class="w-70">
+      <img
+        src="/logo-selva.png"
+        alt="Red Rescate"
+        class="mx-auto h-25 w-auto"
       />
+      <p class="text-white p-4">Comunidad Red Rescate</p>
     </div>
-    <div class="mb-4">
-      <label for="password" class="block mb-1">Contraseña</label>
-      <input
-        type="password"
-        id="password"
-        class="w-full p-2 border border-gray-300 rounded"
-        v-model="user.password"
-      />
+     <div v-if="errorMessage" class="bg-red-600 rounded-md p-2 mt-2 text-white text-center text-sm">
+        {{ errorMessage }}
+      </div>
+    <div class="w-80">
+      <form action="#" @submit.prevent="handleRegister">
+        <div class="mb-4">
+          <label for="email" class="block mb-1">Email</label>
+          <input
+            type="email"
+            id="email"
+            class="w-full p-2 border bg-lime-100 border-gray-300 rounded hover:bg-amber-50 focus:bg-amber-100"
+            v-model="user.email"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="password" class="block mb-1">Contraseña</label>
+          <input
+            type="password"
+            id="password"
+            class="w-full p-2 border bg-lime-100 border-gray-300 rounded hover:bg-amber-50 focus:bg-amber-100"
+            v-model="user.password"
+          />
+        </div>
+       
+       <AppButton class="w-full">Registrarse</AppButton>
+      
+      </form>
+    
     </div>
-
-    <button
-      type="submit"
-      class="transition px-4 py-2 rounded cursor-pointer bg-blue-600 hover:bg-blue-500 focus:bg-blue-500 active:bg-blue-700 text-white"
-    >
-      Enviar
-    </button>
-  </form>
+  </div>
 </template>

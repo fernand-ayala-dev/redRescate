@@ -42,7 +42,7 @@ data() {
 </script>
 
 <template>
-  <header class="relative overflow-hidden bg-amber-100 w-full">
+  <header class="relative overflow-hidden  w-full">
     <div class="container mx-auto px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center py-16">
         <div class="space-y-6">
@@ -58,14 +58,14 @@ data() {
           <div v-if="user.id === null" class="flex flex-wrap gap-3">
             <RouterLink
               to="/publicaciones"
-              class="inline-block px-5 py-3 bg-emerald-600 text-white rounded-lg shadow hover:bg-emerald-700 transition"
+              class="inline-block px-5 py-3 bg-lime-600 text-white rounded-lg shadow hover:bg-lime-700 transition"
             >
               Ver Posteos
             </RouterLink>
 
             <RouterLink
               to="/iniciar"
-              class="inline-block px-5 py-3 bg-emerald-600 text-white rounded-lg shadow hover:bg-emerald-700 transition"
+              class="inline-block px-5 py-3 bg-lime-600 text-white rounded-lg shadow hover:bg-lime-700 transition"
             >
               Iniciar sesion
             </RouterLink>
@@ -73,52 +73,66 @@ data() {
           <div v-else>
             <RouterLink
               to="/publicaciones"
-              class="inline-block px-5 py-3 bg-emerald-600 text-white rounded-lg shadow hover:bg-emerald-700 transition"
+              class="inline-block px-5 py-3 bg-lime-600 text-white rounded-lg shadow hover:bg-lime-700 transition"
             >
               Muro de posteo
             </RouterLink>
           </div>
         </div>
 
-        <div class="relative">
+        <div class="">
           <img
             src="https://www.lifeder.com/wp-content/uploads/2019/03/flora-y-fauna-de-Misiones-Argentina.jpg"
             alt="Banner: flora y fauna de Misiones"
             class="w-full h-64 sm:h-80 md:h-96 object-cover rounded-xl shadow-lg"
           />
-          <div
-            class="absolute left-4 bottom-4 bg-white/80 backdrop-blur-sm rounded-md px-3 py-2 text-sm"
-          >
-            <strong>Cuidemos a nuestra fauna misionera</strong>
-          </div>
+         
         </div>
       </div>
     </div>
   </header>
 
  
-  <section id="about" class="container mx-auto px-6 lg:px-8 py-12">
-    <div class="prose max-w-4xl mx-auto text-center prose-a:text-emerald-600">
-      <AppH2>¿Qué hacemos?</AppH2>
-      <p class="m-2">
-        Este espacio se utiliza para rescatar animales silvestres que estén
-        siendo domesticados, arrollados en rutas o encontrados lastimados.
-        Nuestro objetivo es ayudarlos en su recuperación y trabajar en la
-        concientización sobre el respeto por la fauna local.
+<section class="bg-lime-50 py-16 px-6 lg:px-16">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 items-center gap-8 text-center md:text-left">
+    
+    <!-- Columna izquierda -->
+    <div class="flex flex-col justify-center">
+      <p class="text-gray-700 text-base lg:text-lg leading-relaxed mb-4">
+        Este espacio se utiliza para rescatar animales silvestres que estén siendo domesticados, arrollados en rutas o encontrados lastimados.
       </p>
-      <hr class="m-4">
-      <p class="m-2">
-        Colaboramos con la Fundación <em>GüiráOga</em> y la Fundación
-        <em> OHANA Rescate Animal </em>, que se dedican al cuidado,
-        rehabilitación y conservación. Además, apoyamos el nuevo hospital
-        veterinario de alta complejidad en Misiones, orientado a la atención de
-        animales silvestres heridos y su reinserción al hábitat.
+      <p class="text-gray-700 text-base lg:text-lg leading-relaxed">
+        Nuestro objetivo es ayudarlos en su recuperación y trabajar en la concientización sobre el respeto por la fauna local.
       </p>
     </div>
-  </section>
 
-  <!-- SECCIÓN: Cómo ayudar -->
-  <section id="colabora" class="bg-emerald-50 py-10">
+    <!-- Columna central con el logo -->
+    <div class="flex flex-col items-center justify-center">
+      <img 
+        src="/logo-selva.png" 
+        alt="Logo Selva" 
+        class="h-48 w-48 md:h-56 md:w-56 mx-auto rounded-full shadow-2xl border-4 border-lime-300 mb-4"
+      />
+      <AppH2 class="text-3xl lg:text-4xl font-bold text-lime-900">
+        Red Rescate
+      </AppH2>
+    </div>
+
+    <!-- Columna derecha -->
+    <div class="flex flex-col justify-center">
+      <p class="text-gray-700 text-base lg:text-lg leading-relaxed mb-4">
+        Colaboramos con la Fundación <em class="text-lime-800 font-semibold">GüiráOga</em> y la Fundación <em class="text-lime-800 font-semibold">OHANA Rescate Animal</em>.
+      </p>
+      <p class="text-gray-700 text-base lg:text-lg leading-relaxed">
+        Apoyamos el nuevo hospital veterinario de alta complejidad en Misiones, orientado a la atención de animales silvestres heridos y su reinserción al hábitat.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+  <section class="bg-lime-200/30 py-10">
     <div class="container mx-auto px-6 lg:px-8">
       <AppH2 class="text-center">¿Cómo ayudar?</AppH2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -127,25 +141,12 @@ data() {
           <p class="mt-2 text-sm">
             Llamanos o dejá un reporte con ubicación y fotos.
           </p>
-          <a
-            href="#contacto"
-            class="mt-4 inline-block text-sm font-medium underline"
-          >
-            Reportar ahora
-          </a>
-        </article>
-
-        <article class="p-6 bg-white rounded-lg shadow">
-          <h4 class="font-semibold text-lg">Donaciones y insumos</h4>
-          <p class="mt-2 text-sm">
-            Medicamentos, alimento especial y materiales para rehabilitación.
-          </p>
-          <a
-            href="#donar"
-            class="mt-4 inline-block text-sm font-medium underline"
-          >
-            Conocer opciones
-          </a>
+          <RouterLink
+              to="/iniciar"
+              class="inline-block text-lime-800 text-s underline "
+            >
+              Reportar Ahora
+            </RouterLink>
         </article>
 
         <article class="p-6 bg-white rounded-lg shadow">
@@ -153,26 +154,39 @@ data() {
           <p class="mt-2 text-sm">
             Sumate a las tareas de rehabilitación y cuidado en las fundaciones.
           </p>
-          <a
-            href="#voluntariado"
-            class="mt-4 inline-block text-sm font-medium underline"
-          >
-            Inscribirme
-          </a>
+         <RouterLink
+              to="/iniciar"
+              class="inline-block text-lime-800 text-s underline "
+            >
+              Inscribirme
+            </RouterLink>
+        </article>
+        <article class="p-6 bg-white rounded-lg shadow">
+          <h4 class="font-semibold text-lg">Comunidad</h4>
+          <p class="mt-2 text-sm">
+            Sumate a esta linda comunidad y enterate de los rescates , salvación de estos lindos animales.
+          </p>
+         <RouterLink
+              to="/iniciar"
+              class="inline-block text-lime-800 text-s underline "
+            >
+              Comunidad
+            </RouterLink>
         </article>
       </div>
     </div>
   </section>
 
   <!-- SECCIÓN: Fundaciones amigas -->
-  <section id="rescates" class="container mx-auto px-6 lg:px-8 py-12">
+  <section class="container mx-auto px-6 lg:px-8 py-12 bg-lime-300/40">
     <AppH2 class="text-center">Fundaciones amigas</AppH2>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
       <div class="p-5 bg-white rounded-lg shadow flex items-start gap-4">
         <div
           class="flex-shrink-0 w-16 h-16 rounded-md bg-emerald-100 grid place-items-center font-bold"
         >
-          G
+             <img src="https://scontent-atl3-1.xx.fbcdn.net/v/t51.75761-15/486087195_18392343997109702_6017100678213085116_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeGv0fvWygJIUd0rr04sBs8dl4-d0soRcJCXj53SyhFwkKBhnoPj7TZe5ZaR2_lWtpE&_nc_ohc=MNmaPXzzVzcQ7kNvwHzcQiZ&_nc_oc=AdksLlao2e1qqSwKPIuTE3EMh7F5jCk6sPilbPvHIu1Kllb8JKkh3JR6ujIEOjqh8Vk&_nc_zt=23&_nc_ht=scontent-atl3-1.xx&edm=AKIiGfEEAAAA&_nc_gid=Aohcq3jEeiLYjg8gMSo2ew&oh=00_AfcSNzaaBsd8EijU0GmuVf0OuIt9fW8U-9ofuMqAChfF8Q&oe=68EC917D"
+          alt="Guiraoga">
         </div>
         <div>
           <h4 class="font-semibold">Fundación GüiráOga</h4>
@@ -187,10 +201,11 @@ data() {
         <div
           class="flex-shrink-0 w-16 h-16 rounded-md bg-emerald-100 grid place-items-center font-bold"
         >
-          O
+          <img src="https://i0.wp.com/www.canal12misiones.com/wp-content/uploads/2023/06/ohana.jpg?resize=1089%2C730&ssl=1"
+          alt="Guiraoga">
         </div>
         <div>
-          <h4 class="font-semibold">Fundación OHANA Rescate Animal</h4>
+          <h4 class="font-semibold">Fundación OHANA</h4>
           <p class="text-sm">
             Rehabilitación, rescate y reinserción de animales silvestres.
           </p>

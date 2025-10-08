@@ -1,11 +1,12 @@
 <script>
 import { subscribeToAuthStateChanges } from "../../service/authService";
+import AppButton from "../AppButton.vue";
 
 let unsubscribeFromAuth = () => {};
 
 export default {
   name: "AppPostForm",
-
+components: {AppButton},
   emits: ["send-message"],
   data() {
     return {
@@ -16,6 +17,8 @@ export default {
         display_name: null,
         avatar: null,
       },
+      errorMessage: "",
+      trueMessage: "",
     };
   },
   async mounted() {
@@ -29,8 +32,11 @@ export default {
   },
   methods: {
     async handleForm() {
+      this.errorMessage = "";
+      this.trueMessage = "";
+
       if (!this.newMessages.content) {
-        alert("No puede publicar con el contenido vacio.");
+        this.errorMessage = "No puede publicar con el contenido vacio.";
         return;
       }
       try {
@@ -40,8 +46,13 @@ export default {
           email: this.user.email,
           send_id: this.user.id,
         });
-        console.log("mensaje publicado");
+
+        this.trueMessage = "mensaje publicado";
         this.newMessages.content = "";
+
+        setTimeout(() => {
+          this.trueMessage = "";
+        }, 3000);
       } catch (error) {
         console.error("Error al enviar mensaje:", error);
       }
@@ -51,52 +62,50 @@ export default {
 </script>
 
 <template>
-  <h2 class="mb-4 text-xl font-semibold">Escribe tu publicación</h2>
+  <h3 class="mb-4 text-xl font-semibold">Escribe tu publicación</h3>
+  <div class="bg-lime-700/25 rounded-3xl p-4 mb-7 shadow-xl w-full">
+    <form @submit.prevent="handleForm" class="space-y-4">
+      <div class="flex items-center gap-3">
+        <img
+          :src="
+            user.avatar ??
+            'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+          "
+          alt="avatar del usuario"
+          class="w-20 h-20 rounded-full object-cover border border-gray-200 shadow-lg"
+        />
+        <span
+          class="block bg-gray-50 border border-gray-200 rounded p-2 text-gray-600 text-shadow-xs"
+        >
+          {{ user.display_name }}
+        </span>
+      </div>
 
-  <form @submit.prevent="handleForm" class="space-y-4">
-    <div>
-     
-    </div>
-    <div class="flex items-center gap-3">
-      <img
-        :src="
-          user.avatar ?? 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
-        "
-        alt="avatar del usuario"
-        class="w-10 h-10 rounded-full object-cover border border-gray-200"
-      />
- <span
-        class="block bg-gray-50 border border-gray-200 rounded p-2 text-gray-600"
+      <div
+        v-if="errorMessage"
+        class="bg-red-600 rounded-md p-2 mt-2 text-white text-center text-sm"
       >
-        {{ user.email }}
-      </span>
-    
-    </div>
-    <div>
-      <span
-        class="block bg-gray-50 border border-gray-200 rounded p-2 text-gray-600"
+        {{ errorMessage }}
+      </div>
+      <div
+        v-if="trueMessage"
+        class="bg-green-500 rounded-md p-2 mt-2 text-white text-center text-sm"
       >
-        {{ user.display_name }}
-      </span>
-    </div>
+        {{ trueMessage }}
+      </div>
+      <div>
+        <label for="content" class="block text-gray-700 text-sm mb-1">
+          Publicar en muro..
+        </label>
+        <textarea
+          id="content"
+          class="w-full p-2 border border-gray-500 rounded bg-amber-100/40 focus:bg-amber-50"
+          v-model="newMessages.content"
+          placeholder="Escribe algo..."
+        ></textarea>
+      </div>
 
-    <div>
-      <label for="content" class="block text-gray-700 text-sm mb-1">
-        Mensaje
-      </label>
-      <textarea
-        id="content"
-        class="w-full p-2 border border-gray-200 rounded"
-        v-model="newMessages.content"
-        placeholder="Escribe algo..."
-      ></textarea>
-    </div>
-
-    <button
-      type="submit"
-      class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-500 transition"
-    >
-      Enviar
-    </button>
-  </form>
+     <AppButton>Enviar</AppButton>
+    </form>
+  </div>
 </template>

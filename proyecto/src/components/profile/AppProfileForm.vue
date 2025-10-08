@@ -48,7 +48,7 @@ export default {
       <div class="w-3/12 bg-amber-100 p-4 mx-auto text-center">
         <!-- Avatar -->
         <img
-          :src="user.avatar ?? 'https://via.placeholder.com/120'"
+          :src="user.avatar ?? 'https://cdn-icons-png.flaticon.com/512/149/149071.png'"
           alt="Avatar"
           class="w-28 h-28 rounded-full object-cover border-4 border-white mx-auto"
         />
