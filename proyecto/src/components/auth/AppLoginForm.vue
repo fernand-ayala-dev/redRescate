@@ -52,14 +52,14 @@ export default {
     <div class="flex flex-wrap gap-3">
       <button
         type="submit"
-        class="inline-block px-5 py-3 bg-emerald-600 text-white rounded-lg shadow hover:bg-emerald-700 transition"
+        class="inline-block px-5 py-3 bg-lime-600 text-white rounded-lg shadow hover:bg-lime-900 transition"
       >
         Ingresar
       </button>
 
       <RouterLink
         to="/registrarse"
-        class="inline-block px-5 py-3 bg-emerald-600 text-white rounded-lg shadow hover:bg-emerald-700 transition"
+        class="inline-block px-5 py-3 bg-lime-600 text-white rounded-lg shadow hover:bg-lime-900 transition"
       >
         Registrate
       </RouterLink>

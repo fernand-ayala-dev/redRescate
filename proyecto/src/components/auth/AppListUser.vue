@@ -19,11 +19,11 @@ export default {
 
 <template>
   <div class="p-4">
-    <h2 class="text-xl font-semibold mb-3 text-lime-800">Usuarios registrados</h2>
+    <h3 class="text-xl font-semibold mb-3 text-lime-800">Comunidad Activa</h3>
 
-    <div v-if="loading">Cargando usuarios...</div>
+    
 
-    <ul v-else class="space-y-2">
+    <ul  class="space-y-2">
       <li
         v-for="u in users"
         :key="u.id"

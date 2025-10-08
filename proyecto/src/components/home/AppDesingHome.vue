@@ -5,6 +5,9 @@ import {
   logout,
 } from "../../service/authService.js";
 import AppH2 from "../AppH2.vue";
+
+let unsubscribeFromAuth = () => {};
+
 export default {
   name: "AppDesingHome",
   components: { AppH1, AppH2 },
@@ -29,9 +32,12 @@ data() {
   },
 
   mounted() {
-        subscribeToAuthStateChanges(userState => this.user = userState);
+        unsubscribeFromAuth=subscribeToAuthStateChanges(userState => this.user = userState);
 
   },
+  unmounted(){
+    unsubscribeFromAuth()
+  }
 };
 </script>
 
