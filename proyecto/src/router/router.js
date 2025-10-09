@@ -4,24 +4,32 @@ import Home from "../pages/Home.vue";
 import Login from "../pages/Login.vue";
 import Post from "../pages/Post.vue";
 import Profile from "../pages/Profile.vue";
-import Register from '../pages/Register.vue';
+import Register from "../pages/Register.vue";
 import EditProfile from "../pages/EditProfile.vue";
-
+import ProfileUser from "../pages/ProfileUser.vue";
 
 
 const routes = [
-
   { path: "/", component: Home },
 
   { path: "/iniciar", component: Login },
 
-  { path: "/publicaciones", component: Post, meta: {requiresAuth: true,},},
+  { path: "/publicaciones", component: Post, meta: { requiresAuth: true } },
 
-  { path: "/miPerfil", component: Profile, meta: {requiresAuth: true,},},
+  { path: "/mi_perfil", component: Profile, meta: { requiresAuth: true } },
 
   { path: "/registrarse", component: Register },
 
-  { path: '/miPerfil/editar',  component: EditProfile,   meta: { requiresAuth: true, }, },
+  {
+    path: "/mi_perfil/editar",
+    component: EditProfile,
+    meta: { requiresAuth: true },
+  },
+
+  //visitando el perfil de otro usuario
+   {
+    path: "/perfil/:id",  name: "perfil",  component: ProfileUser,props: true,  meta: { requiresAuth: true }
+  },
 ];
 
 const router = createRouter({
@@ -31,17 +39,16 @@ const router = createRouter({
 
 //restrincion de acceso rutas protegidas
 
-let user={
-  id:null,
+let user = {
+  id: null,
   email: null,
-}
+};
 
-subscribeToAuthStateChanges(userState => user = userState);
+subscribeToAuthStateChanges((userState) => (user = userState));
 
-router.beforeEach((to,from) =>{
-   if(to.meta.requiresAuth && user.id === null) {
-        return '/iniciar';
-    }
-
+router.beforeEach((to, from) => {
+  if (to.meta.requiresAuth && user.id === null) {
+    return "/iniciar";
+  }
 });
 export default router;

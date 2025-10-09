@@ -6,7 +6,7 @@ import {
 } from "../../service/postService.js";
 import AppPostForm from "./AppPostForm.vue";
 import AppListUser from "../auth/AppListUser.vue";
-let unsubscribePosts = () => {};
+let unsubscribeFromAuth = () => {};
 export default {
   name: "AppPostList",
   components: { AppPostForm, AppListUser },
@@ -29,13 +29,13 @@ export default {
 
   async mounted() {
     this.messages = await fetchGlobalPostMessages();
-    unsubscribePosts = subscribeGlobalPostMessages((newMessage) =>
+    unsubscribeFromAuth = subscribeGlobalPostMessages((newMessage) =>
       this.messages.unshift(newMessage)
     );
   },
 
   unmounted() {
-    unsubscribePosts();
+    unsubscribeFromAuth();
   },
 };
 </script>
@@ -79,7 +79,6 @@ export default {
             </div>
           </div>
 
-          <!-- Contenido -->
           <div class="text-gray-700 text-base leading-relaxed">
             {{ message.content }}
           </div>

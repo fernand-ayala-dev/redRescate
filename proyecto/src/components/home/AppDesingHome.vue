@@ -43,10 +43,11 @@ data() {
 
 <template>
   <header class="relative overflow-hidden  w-full">
-    <div class="container mx-auto px-6 lg:px-8">
+    <div class="container mx-auto px-6 lg:px-6">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center py-16">
         <div class="space-y-6">
           <AppH1>Red Rescate</AppH1>
+       
 
           <p class="text-lg sm:text-xl max-w-xl">
             Unite a nuestra comunidad para cuidar a nuestra fauna
@@ -94,9 +95,8 @@ data() {
 
  
 <section class="bg-lime-50 py-16 px-6 lg:px-16">
-  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 items-center gap-8 text-center md:text-left">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-8 text-center md:text-left">    
     
-    <!-- Columna izquierda -->
     <div class="flex flex-col justify-center">
       <p class="text-gray-700 text-base lg:text-lg leading-relaxed mb-4">
         Este espacio se utiliza para rescatar animales silvestres que estén siendo domesticados, arrollados en rutas o encontrados lastimados.
@@ -106,19 +106,19 @@ data() {
       </p>
     </div>
 
-    <!-- Columna central con el logo -->
+   
     <div class="flex flex-col items-center justify-center">
+         <AppH2 class="text-lime-900">
+        Comunidad Red Rescate
+      </AppH2>
       <img 
         src="/logo-selva.png" 
         alt="Logo Selva" 
-        class="h-48 w-48 md:h-56 md:w-56 mx-auto rounded-full shadow-2xl border-4 border-lime-300 mb-4"
+        class="h-48 w-48 md:h-56 md:w-56 mx-auto rounded-full bg-lime-700 shadow-2xl border-4 border-lime-300 mb-4"
       />
-      <AppH2 class="text-3xl lg:text-4xl font-bold text-lime-900">
-        Red Rescate
-      </AppH2>
+   
     </div>
 
-    <!-- Columna derecha -->
     <div class="flex flex-col justify-center">
       <p class="text-gray-700 text-base lg:text-lg leading-relaxed mb-4">
         Colaboramos con la Fundación <em class="text-lime-800 font-semibold">GüiráOga</em> y la Fundación <em class="text-lime-800 font-semibold">OHANA Rescate Animal</em>.
@@ -136,8 +136,8 @@ data() {
     <div class="container mx-auto px-6 lg:px-8">
       <AppH2 class="text-center">¿Cómo ayudar?</AppH2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <article class="p-6 bg-white rounded-lg shadow">
-          <h4 class="font-semibold text-lg">Reportar un animal herido</h4>
+        <article class="p-6 bg-white rounded-lg shadow hover:scale-[1.02] transition-all duration-300">
+          <span class="font-semibold text-lg">Reportar un animal herido</span>
           <p class="mt-2 text-sm">
             Llamanos o dejá un reporte con ubicación y fotos.
           </p>
@@ -149,8 +149,8 @@ data() {
             </RouterLink>
         </article>
 
-        <article class="p-6 bg-white rounded-lg shadow">
-          <h4 class="font-semibold text-lg">Voluntariado</h4>
+        <article class="p-6 bg-white rounded-lg shadow hover:scale-[1.02] transition-all duration-300">
+          <span class="font-semibold text-lg">Voluntariado</span>
           <p class="mt-2 text-sm">
             Sumate a las tareas de rehabilitación y cuidado en las fundaciones.
           </p>
@@ -161,8 +161,8 @@ data() {
               Inscribirme
             </RouterLink>
         </article>
-        <article class="p-6 bg-white rounded-lg shadow">
-          <h4 class="font-semibold text-lg">Comunidad</h4>
+        <article class="p-6 bg-white rounded-lg shadow hover:scale-[1.02] transition-all duration-300">
+          <span class="font-semibold text-lg">Comunidad</span>
           <p class="mt-2 text-sm">
             Sumate a esta linda comunidad y enterate de los rescates , salvación de estos lindos animales.
           </p>
@@ -177,11 +177,11 @@ data() {
     </div>
   </section>
 
-  <!-- SECCIÓN: Fundaciones amigas -->
+  
   <section class="container mx-auto px-6 lg:px-8 py-12 bg-lime-300/40">
     <AppH2 class="text-center">Fundaciones amigas</AppH2>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-      <div class="p-5 bg-white rounded-lg shadow flex items-start gap-4">
+      <div class="p-5 bg-white rounded-lg shadow flex items-start gap-4 hover:scale-[1.02] transition-all duration-300">
         <div
           class="flex-shrink-0 w-16 h-16 rounded-md bg-emerald-100 grid place-items-center font-bold"
         >
@@ -189,7 +189,7 @@ data() {
           alt="Guiraoga">
         </div>
         <div>
-          <h4 class="font-semibold">Fundación GüiráOga</h4>
+          <span class="font-semibold">Fundación GüiráOga</span>
           <p class="text-sm">
             Cuidado y rehabilitación de fauna local, difusión y proyectos de
             conservación.
@@ -197,7 +197,7 @@ data() {
         </div>
       </div>
 
-      <div class="p-5 bg-white rounded-lg shadow flex items-start gap-4">
+      <div class="p-5 bg-white rounded-lg shadow flex items-start gap-4 hover:scale-[1.02] transition-all duration-300">
         <div
           class="flex-shrink-0 w-16 h-16 rounded-md bg-emerald-100 grid place-items-center font-bold"
         >
@@ -205,7 +205,7 @@ data() {
           alt="Guiraoga">
         </div>
         <div>
-          <h4 class="font-semibold">Fundación OHANA</h4>
+          <span class="font-semibold">Fundación OHANA</span>
           <p class="text-sm">
             Rehabilitación, rescate y reinserción de animales silvestres.
           </p>
@@ -214,3 +214,13 @@ data() {
     </div>
   </section>
 </template>
+
+
+<style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+</style>

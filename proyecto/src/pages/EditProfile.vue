@@ -9,7 +9,7 @@ export default {
 </script>
 
 <template>
-<AppH1>editar</AppH1>
+<AppH1>Actualizar mi perfil</AppH1>
 
 <AppEditProfile></AppEditProfile>
 </template>

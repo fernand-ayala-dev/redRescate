@@ -11,6 +11,7 @@ export default {
 </script>
 
 <template>
+  <AppH1 class="sr-only">Mi perfil</AppH1>
 <AppProfileForm/>
 
 </template>

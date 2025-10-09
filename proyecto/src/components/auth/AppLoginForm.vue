@@ -1,6 +1,7 @@
 <script>
 import { login } from "../../service/authService.js";
 import AppButton from "../AppButton.vue";
+import AppH2 from "../AppH2.vue";
 export default {
   name: "ApploginForm",
   components: {AppButton},
@@ -10,7 +11,7 @@ export default {
         email: "",
         password: "",
       },
-      loading: false,
+    
       errorMessage:"",
     };
   },
@@ -22,14 +23,14 @@ export default {
         return;
       }
       try {
-        this.loading = true;
+       
         await login(this.user.email, this.user.password);
         this.$router.push("/publicaciones");
       } catch (error) {
         this.$router.push("/registrarse");
         console.log("error de registro");
       }
-      this.loading = false;
+      
     },
   },
 };
@@ -43,11 +44,11 @@ export default {
         alt="Logo red rescate"
         class="mx-auto h-30 w-auto"
       />
-      <h3
+      <AppH2
         class="mt-10 text-center text-2xl font-bold tracking-tight text-white"
       >
         Ingresá a tu cuenta
-      </h3>
+      </AppH2>
     </div>
       <div v-if="errorMessage" class="bg-red-600 rounded-md p-2 mt-2 text-white text-center text-sm">
         {{ errorMessage }}

@@ -26,7 +26,7 @@ export default {
         this.loading = true;
         await register(this.user.email, this.user.password);
 
-        this.$router.push("/miPerfil");
+        this.$router.push("/mi_perfil");
       } catch (error) {
         console.log("error de registro");
       }

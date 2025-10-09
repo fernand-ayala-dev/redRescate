@@ -6,7 +6,7 @@ let unsubscribeFromAuth = () => {};
 
 export default {
   name: "AppPostForm",
-components: {AppButton},
+  components: { AppButton },
   emits: ["send-message"],
   data() {
     return {
@@ -62,50 +62,64 @@ components: {AppButton},
 </script>
 
 <template>
-  <h3 class="mb-4 text-xl font-semibold">Escribe tu publicación</h3>
-  <div class="bg-lime-700/25 rounded-3xl p-4 mb-7 shadow-xl w-full">
-    <form @submit.prevent="handleForm" class="space-y-4">
-      <div class="flex items-center gap-3">
-        <img
-          :src="
-            user.avatar ??
-            'https://cdn-icons-png.flaticon.com/512/149/149071.png'
-          "
-          alt="avatar del usuario"
-          class="w-20 h-20 rounded-full object-cover border border-gray-200 shadow-lg"
-        />
-        <span
-          class="block bg-gray-50 border border-gray-200 rounded p-2 text-gray-600 text-shadow-xs"
+  <h2 class="sr-only">Escribe tu publicación</h2>
+  <div class="flex gap-4">
+    <div class="w-9/12 mx-0 bg-lime-700/40 rounded-3xl p-4 mb-7 shadow-xl">
+      <form @submit.prevent="handleForm" class="space-y-4">
+        <div class="flex items-center gap-3">
+          <img
+            :src="
+              user.avatar ??
+              'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+            "
+            alt="avatar del usuario"
+            class="w-20 h-20 rounded-full object-cover border border-gray-200 shadow-lg"
+          />
+          <span
+            class="block bg-gray-50 border border-gray-200 rounded p-2 text-gray-600 text-shadow-xs"
+          >
+            {{ user.display_name }}
+          </span>
+        </div>
+
+        <div
+          v-if="errorMessage"
+          class="bg-red-600 rounded-md p-2 mt-2 text-white text-center text-sm"
         >
-          {{ user.display_name }}
-        </span>
-      </div>
+          {{ errorMessage }}
+        </div>
+        <div
+          v-if="trueMessage"
+          class="bg-green-500 rounded-md p-2 mt-2 text-white text-center text-sm"
+        >
+          {{ trueMessage }}
+        </div>
+        <div>
+          <label for="content" class="block text-gray-700 text-sm mb-1">
+            Publicar en muro..
+          </label>
+          <textarea
+            id="content"
+            class="w-full p-2 border border-gray-500 rounded bg-amber-100/40 focus:bg-amber-50"
+            v-model="newMessages.content"
+            placeholder="Escribe algo..."
+          ></textarea>
+        </div>
 
-      <div
-        v-if="errorMessage"
-        class="bg-red-600 rounded-md p-2 mt-2 text-white text-center text-sm"
-      >
-        {{ errorMessage }}
-      </div>
-      <div
-        v-if="trueMessage"
-        class="bg-green-500 rounded-md p-2 mt-2 text-white text-center text-sm"
-      >
-        {{ trueMessage }}
-      </div>
+        <AppButton>Enviar</AppButton>
+      </form>
+    </div>
+    <div class="w-3/12 mx-0 bg-lime-700/40 rounded-3xl p-4 mb-7 shadow-xl">
       <div>
-        <label for="content" class="block text-gray-700 text-sm mb-1">
-          Publicar en muro..
-        </label>
-        <textarea
-          id="content"
-          class="w-full p-2 border border-gray-500 rounded bg-amber-100/40 focus:bg-amber-50"
-          v-model="newMessages.content"
-          placeholder="Escribe algo..."
-        ></textarea>
+          <img
+            :src="
+              user.avatar ??
+              'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+            "
+            alt="avatar del usuario"
+            class="w-full rounded-e-full object-cover border border-gray-200 shadow-lg"
+          />
       </div>
-
-     <AppButton>Enviar</AppButton>
-    </form>
+    </div>
   </div>
 </template>

@@ -4,6 +4,7 @@ import { fetchUserPostMessages } from "../../service/postService.js";
 import AppH1 from "../AppH1.vue";
 import AppH2 from "../AppH2.vue";
 
+
 let unsubscribeFromAuth = () => {};
 export default {
   name: "AppProfileForm",
@@ -30,19 +31,23 @@ export default {
         return;
       }
 
-      this.loading = true;
+    
       this.messages = await fetchUserPostMessages(this.user.id);
-      this.loading = false;
+      
     });
   },
+
+  unmounted(){
+    unsubscribeFromAuth();
+  }
 };
 </script>
 
 <template>
-  <AppH1>Mi perfil</AppH1>
+  <AppH2>Mi perfil</AppH2>
 
   <section
-    class="bg-lime-200 rounded-xl shadow-md p-6 border border-gray-200 max-w-3xl mx-auto"
+    class="bg-lime-200 rounded-xl shadow-md p-6 border border-gray-200 max-w-3xl mx-auto  rounded-e-full"
   >
     <div class="flex gap-4">
       <div class="w-3/12 bg-amber-100 p-4 mx-auto text-center">
@@ -52,14 +57,14 @@ export default {
           alt="Avatar"
           class="w-28 h-28 rounded-full object-cover border-4 border-white mx-auto"
         />
-        <h3 class="text-xl font-semibold text-gray-800 mb-1">
+        <span class="text-xl font-semibold text-gray-800 mb-1">
           {{ user.display_name ?? "Sin especificar..." }}
-        </h3>
+        </span>
         <p class="text-sm text-gray-500 mb-4">
           {{ user.email ?? "" }}
         </p>
         <RouterLink
-          to="/miPerfil/editar"
+          to="/mi_perfil/editar"
           class="inline-block px-4 py-2 bg-amber-300 text-gray-800 rounded-md hover:bg-amber-500 transition"
         >
           Editar
@@ -68,7 +73,7 @@ export default {
 
       <div class="w-9/12 p-4 shadow-md">
         <!-- Biografía -->
-        <h4 class="text-lg font-medium text-gray-700 mb-1">Biografía</h4>
+        <span class="text-lg font-medium text-gray-700 mb-1">Biografía</span>
         <p class="text-gray-600 italic">
           {{ user.biografia ?? "Sin especificar..." }}
         </p>
@@ -83,6 +88,7 @@ export default {
       No has publicado nada aún.
     </div>
     <div v-else>
+     
       <ul class="space-y-4">
         <li
           v-for="msg in messages"
