@@ -3,7 +3,7 @@ import { subscribeToAuthStateChanges } from "../service/authService";
 import Home from "../pages/Home.vue";
 import Login from "../pages/Login.vue";
 import Post from "../pages/Post.vue";
-import Profile from "../pages/Profile.vue";
+import MyProfile from "../pages/MyProfile.vue";
 import Register from "../pages/Register.vue";
 import EditProfile from "../pages/EditProfile.vue";
 import ProfileUser from "../pages/ProfileUser.vue";
@@ -16,7 +16,7 @@ const routes = [
 
   { path: "/publicaciones", component: Post, meta: { requiresAuth: true } },
 
-  { path: "/mi_perfil", component: Profile, meta: { requiresAuth: true } },
+  { path: "/mi_perfil", component: MyProfile, meta: { requiresAuth: true } },
 
   { path: "/registrarse", component: Register },
 

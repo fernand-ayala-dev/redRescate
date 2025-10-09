@@ -10,7 +10,7 @@ export default {
 </script>
 
 <template>
-<AppH1>Comunidad</AppH1>
+<AppH1 class="sr-only">Comunidad</AppH1>
 
 <AppPostList/>
 </template>

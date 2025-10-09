@@ -41,9 +41,14 @@ export default {
 </script>
 
 <template>
-  <section>
-    <AppPostForm @send-message="handleSendMessage" />
-  </section>
+ 
+   <div class="h-80 relative p-6 bg-[url('https://cloudfront-us-east-1.images.arcpublishing.com/infobae/IR2O7ROIW5HC3JV2XM4FZWP2Y4.jpg')] bg-cover bg-no-repeat bg-center">
+  <p class="absolute bottom-4 left-4 text-white text-2xl font-bold bg-black/40 px-3 py-1 rounded">
+    Comunidad Red Rescate
+  </p>
+</div>
+
+   
 
   <div class="flex gap-4">
     <section
@@ -87,6 +92,7 @@ export default {
     </section>
 
     <section class="w-3/12">
+        <AppPostForm @send-message="handleSendMessage" />
       <AppListUser></AppListUser>
     </section>
   </div>

@@ -1,10 +1,10 @@
 <script>
 import AppH1 from "../components/AppH1.vue";
 
-import AppProfileForm from "../components/profile/AppProfileForm.vue";
+import AppProfileForm from "../components/profile/AppMyProfileForm.vue";
 
 export default {
-  name: "Profile",
+  name: "MyProfile",
   components: { AppH1 , AppProfileForm},
 
 };
