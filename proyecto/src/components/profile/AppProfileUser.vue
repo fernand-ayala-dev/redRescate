@@ -33,12 +33,12 @@ export default {
 </script>
 
 <template>
-  <div class="p-4 bg-amber-300/40">
-    <AppH1>Visitando perfil</AppH1>
+  <div class="p-4 bg-linear-to-t from-amber-200 to-lime-400/35 shadow-lg">
+    <AppH1 class="text-center">Visitando perfil</AppH1>
 
     <section
       v-if="!loading"
-      class="bg-lime-200 rounded-xl shadow-md p-6 border border-gray-200 max-w-3xl mx-auto"
+      class="bg-lime-200 rounded-xl shadow-md p-6 border border-gray-300 max-w-3xl mx-auto"
     >
       <div class="flex gap-4">
         <div class="w-3/12 bg-amber-100 p-4 mx-auto text-center">
@@ -51,7 +51,7 @@ export default {
           <p class="text-sm text-gray-500 mb-2">{{ user.email }}</p>
         </div>
 
-        <div class="w-9/12 p-4 shadow-md">
+        <div class="w-9/12 p-4 shadow-md bg-amber-100">
           <span class="text-lg font-medium text-gray-700 mb-1">Biografía</span>
           <p class="text-gray-600 italic">
             {{ user.biografia ?? "Sin biografía..." }}
@@ -65,7 +65,7 @@ export default {
     </div>
 
     <div v-else class="p-4">
-      <AppH2>Publicaciones</AppH2>
+      <AppH2 class="font-normal">Publicaciones de {{ user.email }}</AppH2>
 
       <div v-if="messages.length === 0" class="text-gray-500">
         Este usuario no tiene publicaciones aún.

@@ -42,17 +42,18 @@ export default {
 
 <template>
  
-   <div class="h-80 relative p-6 bg-[url('https://cloudfront-us-east-1.images.arcpublishing.com/infobae/IR2O7ROIW5HC3JV2XM4FZWP2Y4.jpg')] bg-cover bg-no-repeat bg-center">
+   <div class="h-80 relative bg-[url('/banner-selva.jpg')] bg-cover bg-no-repeat bg-center p-6">
   <p class="absolute bottom-4 left-4 text-white text-2xl font-bold bg-black/40 px-3 py-1 rounded">
     Comunidad Red Rescate
   </p>
 </div>
 
+
    
 
   <div class="flex gap-4">
     <section
-      class="w-9/12 md:w-9/12 mx-auto h-[80vh] overflow-y-auto p-6 bg-gray-50 rounded-2xl shadow-inner border border-gray-200"
+      class="w-9/12 md:w-9/12 mx-auto h-[100vh] overflow-y-auto p-6 bg-gray-50 rounded-2xl shadow-inner border border-gray-200"
     >
       <h2 class="sr-only">Lista de publicaciones</h2>
 

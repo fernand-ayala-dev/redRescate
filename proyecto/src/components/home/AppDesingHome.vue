@@ -95,7 +95,7 @@ data() {
 
  
 <section class="bg-lime-50 py-16 px-6 lg:px-16">
-  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-8 text-center md:text-left">    
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 items-center gap-8 text-center md:text-left">    
     
     <div class="flex flex-col justify-center">
       <p class="text-gray-700 text-base lg:text-lg leading-relaxed mb-4">
