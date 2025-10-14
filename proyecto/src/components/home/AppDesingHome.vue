@@ -1,10 +1,11 @@
 <script>
-import AppH1 from "../AppH1.vue";
+
 import {
   subscribeToAuthStateChanges,
   logout,
 } from "../../service/authService.js";
-import AppH2 from "../AppH2.vue";
+import AppH1 from "../estilos/AppH1.vue";
+import AppH2 from "../estilos/AppH2.vue";
 
 let unsubscribeFromAuth = () => {};
 
@@ -66,7 +67,7 @@ data() {
 
             <RouterLink
               to="/iniciar"
-              class="inline-block px-5 py-3 bg-lime-600 text-white rounded-lg shadow hover:bg-lime-700 transition"
+              class="inline-block px-5 py-3 bg-lime-600 text-white rounded-lg shadow hover:bg-lime-700 hover:scale-[1.02] transition-all duration-300"
             >
               Iniciar sesion
             </RouterLink>
@@ -74,7 +75,7 @@ data() {
           <div v-else>
             <RouterLink
               to="/publicaciones"
-              class="inline-block px-5 py-3 bg-lime-600 text-white rounded-lg shadow hover:bg-lime-700 transition"
+              class="inline-block px-5 py-3 bg-lime-600 text-white rounded-lg shadow hover:bg-lime-700 hover:scale-[1.02] transition-all duration-300"
             >
               Muro de posteo
             </RouterLink>

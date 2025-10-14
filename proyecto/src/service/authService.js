@@ -69,9 +69,10 @@ export async function register(email, password) {
       email: data.user.email,
     });
   } catch (error) {
-    console.error("Error al registrar usuario:", error.er);
+    console.error("Error al registrar usuario:", error);
   }
 }
+
 
 /**
  * inicio de sesion

@@ -1,5 +1,5 @@
 <script>
-import AppH1 from "../components/AppH1.vue";
+import AppH1 from "../components/estilos/AppH1.vue";
 
 import AppProfileForm from "../components/profile/AppMyProfileForm.vue";
 

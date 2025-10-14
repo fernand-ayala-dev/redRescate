@@ -1,6 +1,6 @@
 <script>
 
-import AppH1 from "../components/AppH1.vue";
+import AppH1 from "../components/estilos/AppH1.vue";
 import AppDesingHome from "../components/home/AppDesingHome.vue";
 
 export default {

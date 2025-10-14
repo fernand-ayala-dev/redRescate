@@ -6,7 +6,8 @@ import {
 } from "../../service/postService.js";
 import AppPostForm from "./AppPostForm.vue";
 import AppListUser from "../auth/AppListUser.vue";
-let unsubscribeFromAuth = () => {};
+
+let unsubscribeFromPost = () => {}
 export default {
   name: "AppPostList",
   components: { AppPostForm, AppListUser },
@@ -29,31 +30,36 @@ export default {
 
   async mounted() {
     this.messages = await fetchGlobalPostMessages();
-    unsubscribeFromAuth = subscribeGlobalPostMessages((newMessage) =>
+    unsubscribeFromPost = subscribeGlobalPostMessages((newMessage) =>
       this.messages.unshift(newMessage)
     );
   },
 
   unmounted() {
-    unsubscribeFromAuth();
+    unsubscribeFromPost();
   },
 };
 </script>
 
 <template>
- 
-   <div class="h-80 relative bg-[url('/banner-selva.jpg')] bg-cover bg-no-repeat bg-center p-6">
-  <p class="absolute bottom-4 left-4 text-white text-2xl font-bold bg-black/40 px-3 py-1 rounded">
-    Comunidad Red Rescate
-  </p>
-</div>
+  <div
+    class="h-40 relative bg-[url('https://www.coolearth.org/wp-content/uploads/2025/07/1108_6b8d64ef3bf89e9-scaled-e1637242723755-2560x1440-c-center.jpeg')] bg-cover bg-no-repeat bg-center p-6 flex flex-col items-center justify-center"
+  >
+    <p
+      class="absolute bottom-4 left-4 text-white text-2xl font-bold bg-black/40 px-3 py-1 rounded"
+    >
+      Comunidad Red Rescate
+    </p>
+    <img
+      src="/logo-selva.png"
+      alt="Logo Selva"
+      class="h-30 w-30 rounded-full bg-lime-600 shadow-2xl border-4 border-lime-300"
+    />
+  </div>
 
-
-   
-
-  <div class="flex gap-4">
-    <section
-      class="w-9/12 md:w-9/12 mx-auto h-[100vh] overflow-y-auto p-6 bg-gray-50 rounded-2xl shadow-inner border border-gray-200"
+  <section class="flex gap-4 mt-4">
+    <div
+      class="w-9/12 md:w-9/12 mx-auto h-[100vh] overflow-y-auto p-6 bg-black/10 rounded-3xl shadow-inner border border-gray-200"
     >
       <h2 class="sr-only">Lista de publicaciones</h2>
 
@@ -63,7 +69,7 @@ export default {
           :key="message.id"
           class="p-5 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 w-full border border-gray-100"
         >
-          <!-- Encabezado del post -->
+       
           <div class="flex items-center justify-between mb-3">
             <div class="flex items-center gap-3">
               <img
@@ -90,11 +96,11 @@ export default {
           </div>
         </li>
       </ol>
-    </section>
+    </div>
 
-    <section class="w-3/12">
-        <AppPostForm @send-message="handleSendMessage" />
+    <div class="w-3/12">
+      <AppPostForm @send-message="handleSendMessage" />
       <AppListUser></AppListUser>
-    </section>
-  </div>
+    </div>
+  </section>
 </template>

@@ -14,7 +14,7 @@ export default {
 <template>
  <AppNavbar/>
  
-  <main class="container mx-auto text-xl font-sans leading-8 bg-lime-400/10 " >
+  <main class="container mx-auto text-xl font-sans leading-8 bg-lime-400/10 shadow-xl" >
     <RouterView/>
    
   </main>

@@ -3,8 +3,8 @@ import {
   subscribeToAuthStateChanges,
   updateAuthProfile,
 } from "../../service/authService";
-import AppH1 from "../AppH1.vue";
-import AppButton from "../AppButton.vue";
+import AppH1 from "../estilos/AppH1.vue";
+import AppButton from "../estilos/AppButton.vue";
 let unsubscribeFromAuth = () => {};
 export default {
   name: "AppEditProfile",
@@ -34,7 +34,7 @@ export default {
         }, 2000)
          this.$router.push("/mi_perfil");
       } catch (error) {
-        //TODO
+        console.error("Error al enviar mensaje:", error);
       }
 
       this.loading = false;
@@ -96,7 +96,6 @@ export default {
         />
       </div>
 
-      <!-- Biografía -->
       <div>
         <label for="biografia" class="block text-sm font-medium text-gray-700 p-4"
           >Biografía</label

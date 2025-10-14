@@ -1,14 +1,19 @@
 <script>
 import { subscribeToAuthStateChanges } from "../../service/authService.js";
-import { fetchUserPostMessages } from "../../service/postService.js";
-import AppH1 from "../AppH1.vue";
-import AppH2 from "../AppH2.vue";
+import {
+  fetchUserPostMessages,
+  sendNewGlobalPostMessages,
+  subscribeGlobalPostMessages
+} from "../../service/postService.js";
+import AppH1 from "../estilos/AppH1.vue";
+import AppH2 from "../estilos/AppH2.vue";
 import AppPostForm from "../posts/AppPostForm.vue";
 
 let unsubscribeFromAuth = () => {};
 export default {
   name: "AppProfileForm",
   components: { AppH1, AppH2, AppPostForm },
+
   data() {
     return {
       messages: [],
@@ -22,16 +27,32 @@ export default {
     };
   },
 
-  async mounted() {
-    unsubscribeFromAuth = subscribeToAuthStateChanges(async (userState) => {
-      this.user = userState;
+  methods: {
+    async handleSendMessage(message) {
+      try {
+        await sendNewGlobalPostMessages(message);
+      } catch (error) {
+        console.error("Error al enviar mensaje:", error);
+      }
+    },
+  },
 
-      if (!this.user.id) {
+  async mounted() {
+    
+    unsubscribeFromAuth = subscribeToAuthStateChanges(async (userState) => {
+      if (!userState || !userState.id) {
+        this.user = null;
         this.messages = [];
         return;
       }
 
+      this.user = userState;
+
       this.messages = await fetchUserPostMessages(this.user.id);
+
+      unsubscribeFromAuth = subscribeGlobalPostMessages((newMessage) =>
+        this.messages.unshift(newMessage)
+      );
     });
   },
 
@@ -86,44 +107,55 @@ export default {
   </section>
   <section class="flex gap-4 mt-5">
     <div class="w-9/12">
-      <div class="p-4 h-[500px] overflow-y-auto">
-        <AppH2 class="">Mis publicaciones</AppH2>
-        <div v-if="messages.length === 0" class="text-gray-500">
-          No has publicado nada aún.
-        </div>
-        <div v-else>
-          <ul class="space-y-4">
-            <li
-              v-for="msg in messages"
-              :key="msg.id"
-              class="p-4 bg-white rounded shadow border border-gray-200"
-            >
-              <div class="flex items-center gap-3 mb-2">
+      <div v-if="messages.length === 0" class="text-gray-500">
+        Este usuario no tiene publicaciones aún.
+      </div>
+
+      <div
+        v-else
+        class="h-[80vh] overflow-y-auto p-6 bg-black/10 rounded-3xl shadow-inner border border-gray-200"
+      >
+        <h2 class="sr-only">Lista de publicaciones</h2>
+
+        <ol class="flex flex-col gap-6">
+          <li
+            v-for="message in messages"
+            :key="message.id"
+            class="p-5 bg-white rounded-xl shadow-sm w-full border border-gray-100"
+          >
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-3">
                 <img
                   :src="
-                    msg.avatar ??
+                    message.avatar ??
                     'https://cdn-icons-png.flaticon.com/512/149/149071.png'
                   "
                   alt="avatar"
-                  class="w-8 h-8 rounded-full object-cover border border-gray-200"
+                  class="w-10 h-10 rounded-full object-cover border border-gray-200"
                 />
                 <div>
-                  <p class="font-medium text-gray-800">
-                    {{ msg.display_name ?? user.email }}
+                  <p class="font-semibold text-gray-800">
+                    {{ message.email }}
                   </p>
                   <p class="text-xs text-gray-500">
-                    {{ new Date(msg.created_at).toLocaleString() }}
+                    Publicó el
+                    {{ new Date(message.created_at).toLocaleString() }}
                   </p>
                 </div>
               </div>
-              <p class="text-gray-700">{{ msg.content }}</p>
-            </li>
-          </ul>
-        </div>
+            </div>
+
+            <div class="text-gray-700 text-base leading-relaxed">
+              {{ message.content }}
+            </div>
+          </li>
+        </ol>
       </div>
     </div>
+
+    <!--Aca pondria otra cosa como lista de msj personales-->
     <div class="w-3/12 mt-4">
-      <AppPostForm></AppPostForm>
+      <AppPostForm @send-message="handleSendMessage" />
     </div>
   </section>
 </template>

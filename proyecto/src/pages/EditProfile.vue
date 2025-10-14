@@ -1,5 +1,5 @@
 <script>
-import AppH1 from '../components/AppH1.vue';
+import AppH1 from '../components/estilos/AppH1.vue';
 import AppEditProfile from '../components/profile/AppEditProfile.vue';
 
 export default {

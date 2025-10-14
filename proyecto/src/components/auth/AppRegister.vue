@@ -1,9 +1,10 @@
 <script>
 import { register } from "../../service/authService.js";
-import AppButton from "../AppButton.vue";
+import AppButton from "../estilos/AppButton.vue";
+import AppH2 from "../estilos/AppH2.vue";
 export default {
   name: "AppRegister",
-  components: {AppButton},
+  components: { AppButton, AppH2 },
   data() {
     return {
       user: {
@@ -12,33 +13,36 @@ export default {
       },
 
       loading: false,
-      errorMessage:"",
+      errorMessage: "",
     };
   },
   methods: {
-    async handleRegister() {
-       this.errorMessage = "";
-      if (!this.user.email || !this.user.password) {
-       this.errorMessage = "Por favor completa todos los campos.";
-        return;
-      }
-      try {
-        this.loading = true;
-        await register(this.user.email, this.user.password);
+   async handleRegister() {
+  this.errorMessage = "";
+  if (!this.user.email || !this.user.password) {
+    this.errorMessage = "Por favor completa todos los campos.";
+    return;
+  }
 
-        this.$router.push("/mi_perfil");
-      } catch (error) {
-        console.log("error de registro");
-      }
-      this.loading = false;
-    },
+  try {
+    this.loading = true;
+    await register(this.user.email, this.user.password);
+    this.$router.push("/mi_perfil");
+  } catch (error) {
+    console.error("Error al registrar usuario:", error);
+    this.errorMessage = error.message || "Error inesperado al registrarse.";
+  } finally {
+    this.loading = false;
+  }
+}
+
   },
 };
 </script>
 
 <template>
-  <div
-    class="flex w-100 flex-col justify-center items-center mx-auto p-4 rounded-2xl bg-lime-800/35"
+  <section
+    class="flex w-100 flex-col my-5 justify-center items-center mx-auto p-4 rounded-2xl bg-lime-800/35"
   >
     <div class="w-70">
       <img
@@ -46,11 +50,16 @@ export default {
         alt="Red Rescate"
         class="mx-auto h-25 w-auto"
       />
-      <p class="text-white p-4">Comunidad Red Rescate</p>
+      <AppH2 class="text-center text-2xl font-bold text-white">
+        Comunidad Red Rescate
+      </AppH2>
     </div>
-     <div v-if="errorMessage" class="bg-red-600 rounded-md p-2 mt-2 text-white text-center text-sm">
-        {{ errorMessage }}
-      </div>
+    <div
+      v-if="errorMessage"
+      class="bg-red-600 rounded-md p-2 mt-2 text-white text-center text-sm"
+    >
+      {{ errorMessage }}
+    </div>
     <div class="w-80">
       <form action="#" @submit.prevent="handleRegister">
         <div class="mb-4">
@@ -71,11 +80,10 @@ export default {
             v-model="user.password"
           />
         </div>
-       
-       <AppButton class="w-full">Registrarse</AppButton>
-      
+        <AppButton class="w-full" :disabled="loading">
+          {{ loading ? "Registrando..." : "Registrarse" }}
+        </AppButton>
       </form>
-    
     </div>
-  </div>
+  </section>
 </template>

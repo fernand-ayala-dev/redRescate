@@ -1,6 +1,6 @@
 <script>
 import { subscribeToAuthStateChanges } from "../../service/authService";
-import AppButton from "../AppButton.vue";
+import AppButton from "../estilos/AppButton.vue";
 
 let unsubscribeFromAuth = () => {};
 
@@ -63,8 +63,8 @@ export default {
 
 <template>
   <h2 class="sr-only">Escribe tu publicación</h2>
-
-  <div class="mx-0 bg-lime-700/40 rounded-3xl p-4 mb-7 shadow-xl">
+<section>
+  <div class="mx-0 bg-lime-400/40 rounded-3xl p-4 mb-7 shadow-xl">
     <form @submit.prevent="handleForm" class="space-y-4">
       <div class="flex items-center gap-3">
         <img
@@ -109,4 +109,5 @@ export default {
       <AppButton class="w-full">Enviar</AppButton>
     </form>
   </div>
+  </section>
 </template>

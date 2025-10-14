@@ -6,6 +6,7 @@ import { supabase } from "./supabase";
  * @returns {Promise<{id: String, email: String, display_name: String|null, biografia: String|null, avatar: String|null, created_at: String}>}
  */
 export async function getUserProfileById(id) {
+  
     const {data, error} =await supabase
     .from('my_profile')
     .select()
