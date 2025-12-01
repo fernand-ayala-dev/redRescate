@@ -128,7 +128,7 @@ export default {
                 <img
                   :src="
                     message.avatar ??
-                    'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+                    'nada'
                   "
                   alt="avatar"
                   class="w-10 h-10 rounded-full object-cover border border-gray-200"

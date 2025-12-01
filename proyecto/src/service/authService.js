@@ -13,30 +13,40 @@ let observers = [];
 
 if (localStorage.getItem("user")) {
   user = JSON.parse(localStorage.getItem("user"));
+  notifyAll()
 }
 
 loadCurrentUserAuthState();
 
-
 async function loadCurrentUserAuthState() {
   const { data, error } = await supabase.auth.getUser();
 
-  if (error) {
+ 
+  if (error || !data.user) {
     console.warn("No hay un usuario Autentificado");
-    return;
+    setUser({ id: null, email: null });
+    return; 
   }
 
-  setUser({
+
+  const basicUser = {
     id: data.user.id,
     email: data.user.email,
-  });
+  };
 
-  loadUserFullProfile();
+  setUser(basicUser);
+
+  await loadUserFullProfile(basicUser.id);
 }
 
 async function loadUserFullProfile() {
-  setUser(await getUserProfileById(user.id));
+  if (!user.id) return;
+  const profile = await getUserProfileById(user.id);
+  if (profile) {
+    setUser(profile);
+  }
 }
+
 
 /**
  *Registrar usuario
@@ -44,32 +54,21 @@ async function loadUserFullProfile() {
  * @param {String} password
  */
 export async function register(email, password) {
+  if (password.length < 6) {
+    return { ok: false, message: "La contraseña debe tener al menos 6 caracteres." };
+  }
+
   try {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
+    const { data, error } = await supabase.auth.signUp({ email, password });
 
     if (error) {
-      throw new Error("Error al crear usuario: " + error.message);
-   
+      return { ok: false, message: error.message };
     }
 
-    console.log("Usuario registrado con éxito.", data);
+    return { ok: true, user: data.user };
 
-    // Crear el perfil del usuario en tabla "my_profile"
-    await createUserProfile({
-      id: data.user.id,
-      email: data.user.email,
-    });
-
-    // Actualizar el estado global del usuario
-    setUser({
-      id: data.user.id,
-      email: data.user.email,
-    });
-  } catch (error) {
-    console.error("Error al registrar usuario:", error);
+  } catch (err) {
+    return { ok: false, message: "Error inesperado en el registro." };
   }
 }
 
@@ -85,28 +84,37 @@ export async function login(email, password) {
     email,
     password,
   });
-  if (error) {
-    console.error("Error al crear usuario");
-  }
-  console.log("Usuario inicion sesion con exito.", data);
 
+  if (error) {
+    console.error("Error al iniciar sesión:", error.message);
+    return null; 
+  }
+
+  console.log("Usuario inició sesión con éxito.", data);
+
+ 
   setUser({
     id: data.user.id,
     email: data.user.email,
   });
 
-  loadUserFullProfile();
+  await loadUserFullProfile();
+
+  return data.user;
 }
 
 /**
  * Cerrar sesión
  */
 export async function logout() {
-  supabase.auth.signOut();
+  await supabase.auth.signOut();
 
   setUser({
     id: null,
     email: null,
+     display_name: null,
+    biografia: null,
+    avatar: null,
   });
 }
 

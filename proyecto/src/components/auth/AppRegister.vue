@@ -17,20 +17,30 @@ export default {
     };
   },
   methods: {
-   async handleRegister() {
+async handleRegister() {
   this.errorMessage = "";
+
   if (!this.user.email || !this.user.password) {
     this.errorMessage = "Por favor completa todos los campos.";
     return;
   }
 
+  this.loading = true;
+
   try {
-    this.loading = true;
-    await register(this.user.email, this.user.password);
+    const result = await register(this.user.email, this.user.password);
+
+    if (!result.ok) {
+      this.errorMessage = result.message;
+      return;
+    }
+
+    // ✔ Registro exitoso
     this.$router.push("/mi_perfil");
+
   } catch (error) {
     console.error("Error al registrar usuario:", error);
-    this.errorMessage = error.message || "Error inesperado al registrarse.";
+    this.errorMessage = "Error inesperado al registrarse.";
   } finally {
     this.loading = false;
   }

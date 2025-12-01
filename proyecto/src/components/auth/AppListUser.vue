@@ -8,24 +8,36 @@ import AppLoaders from "../estilos/AppLoaders.vue";
 export default {
   name: "AppListUser",
   components: { AppLoaders },
+
+  props: {
+    selectMode: { type: Boolean, default: false }, 
+    // true ➜ emitir evento
+    // false ➜ ir a perfil
+  },
+
   data() {
     return {
       users: [],
       loading: false,
-      user: {
-        id: null,
-        email: null,
-        display_name: null,
-        biografia: null,
-        avatar: null,
-      },
     };
   },
+
   async mounted() {
     this.loading = true;
     this.users = await fechtAllUserProfiles();
-    this.user = await getUserProfileById(this.$route.params.id);
     this.loading = false;
+  },
+
+  methods: {
+    handleClick(user) {
+      if (this.selectMode) {
+        // 👉 modo chat: emitir evento
+        this.$emit("select-user", user.id);
+      } else {
+        // 👉 modo normal: ir a perfil
+        this.$router.push({ name: "perfil", params: { id: user.id } });
+      }
+    },
   },
 };
 </script>
@@ -42,23 +54,20 @@ export default {
           <li
             v-for="u in users"
             :key="u.id"
-            class="p-3 border border-lime-500 rounded-md bg-lime-50 hover:bg-lime-200"
+            class="p-3 border border-lime-500 rounded-md bg-lime-50 hover:bg-lime-200 cursor-pointer"
+            @click="handleClick(u)"
           >
-            <router-link
-              :to="{ name: 'perfil', params: { id: u.id } }"
-              class="block cursor-pointer"
-            >
-              <p class="font-medium text-lime-900">
-                {{ u.display_name || "Usuario" }}
-              </p>
-              <p class="text-sm text-gray-600">{{ u.email }}</p>
-            </router-link>
+            <p class="font-medium text-lime-900">
+              {{ u.display_name || "Usuario" }}
+            </p>
+            <p class="text-sm text-gray-600">{{ u.email }}</p>
           </li>
         </ul>
       </div>
     </template>
+
     <template v-else>
-      <AppLoaders></AppLoaders>
+      <AppLoaders />
     </template>
   </section>
 </template>

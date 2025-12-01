@@ -7,6 +7,7 @@ import MyProfile from "../pages/MyProfile.vue";
 import Register from "../pages/Register.vue";
 import EditProfile from "../pages/EditProfile.vue";
 import ProfileUser from "../pages/ProfileUser.vue";
+import Chats from "../pages/Chats.vue";
 
 
 const routes = [
@@ -30,6 +31,12 @@ const routes = [
    {
     path: "/perfil/:id",  name: "perfil",  component: ProfileUser,props: true,  meta: { requiresAuth: true }
   },
+   {
+    path: "/chats/:id",  name: "chats",  component: Chats , meta :{ requiresAuth: true }
+  },
+  
+  
+
 ];
 
 const router = createRouter({
@@ -37,7 +44,6 @@ const router = createRouter({
   history: createWebHistory(),
 });
 
-//restrincion de acceso rutas protegidas
 
 let user = {
   id: null,
