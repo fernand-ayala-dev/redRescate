@@ -87,7 +87,7 @@ export async function login(email, password) {
 
   if (error) {
     console.error("Error al iniciar sesión:", error.message);
-    return null; 
+   throw new Error("Credenciales inválidas");
   }
 
   console.log("Usuario inició sesión con éxito.", data);

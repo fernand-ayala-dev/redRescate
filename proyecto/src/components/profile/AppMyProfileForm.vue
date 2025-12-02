@@ -152,10 +152,10 @@ export default {
         </ol>
       </div>
     </div>
-
-    <!--Aca pondria otra cosa como lista de msj personales-->
+  
     <div class="w-3/12 mt-4">
       <AppPostForm @send-message="handleSendMessage" />
+      
     </div>
   </section>
 </template>

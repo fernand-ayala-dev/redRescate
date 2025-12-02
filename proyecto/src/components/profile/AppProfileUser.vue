@@ -38,12 +38,14 @@ export default {
   <div class="p-4 bg-amber-300/40">
     <AppH1>Visitando perfil</AppH1>
 
-    <!-- Loader -->
-    <div v-if="loading" class="text-center text-gray-500 mt-6">
+    
+      <div
+      v-if="loading"
+      class="fixed inset-0 flex items-center justify-center bg-black/40 z-50"
+    >
       <AppLoaders />
     </div>
 
-    <!-- Perfil -->
     <section
       v-else
       class="bg-lime-200 rounded-xl shadow-md p-6 border border-gray-200 max-w-3xl mx-auto"
@@ -65,8 +67,6 @@ export default {
       </div>
     </section>
 
-
-    <!-- Publicaciones -->
     <div v-if="!loading" class="p-4">
       <AppH2 class="text-center">Publicaciones</AppH2>
 

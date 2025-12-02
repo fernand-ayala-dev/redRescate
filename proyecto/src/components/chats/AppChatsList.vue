@@ -4,6 +4,7 @@ import {
   fetchChatLastMessages,
   sendChatMessage,
   subscribeToChatNewMessages,
+  createChat,
 } from "../../service/chatServicio";
 
 import AppChatsForm from "./AppChatsForm.vue";
@@ -26,6 +27,7 @@ export default {
       myUser: null,
       chatId: null,
       otherUser: null,
+      noMessages: false,
     };
   },
 
@@ -42,46 +44,68 @@ export default {
   },
 
   methods: {
-    async initializeChat() {
-      if (!this.myUser || !this.receiverId) return;
+   async initializeChat() {
+  if (!this.myUser || !this.receiverId) return;
 
-      this.otherUser = await getUserProfileById(this.receiverId);
+  unsubscribeFromChat();
 
-      const chat = await getChatFor(this.myUser.id, this.receiverId);
-      this.chatId = chat ? chat.id : null;
+  this.otherUser = await getUserProfileById(this.receiverId);
 
-      if (!chat) {
-        this.messages = [];
-        this.noMessages = true;
-        return;
+  const chat = await getChatFor(this.myUser.id, this.receiverId);
+
+  if (!chat) {
+    this.chatId = null;
+    this.messages = [];
+    this.noMessages = true;
+    return;
+  }
+
+  this.chatId = chat.id;
+
+  this.messages = await fetchChatLastMessages(
+    this.myUser.id,
+    this.receiverId
+  );
+  this.noMessages = this.messages.length === 0;
+
+ 
+  unsubscribeFromChat = await subscribeToChatNewMessages(
+    this.myUser.id,      
+    this.receiverId,    
+    (msg) => {
+     
+      if (String(msg.chat_id) === String(this.chatId)) {
+        this.messages = [...this.messages, msg];
       }
-    
-      this.messages = await fetchChatLastMessages(
-        this.myUser.id,
-        this.receiverId
-      );
+    }
+  );
+},
 
-      if (!this.messages || this.messages.length === 0) {
-        this.noMessages = true;
-      } else {
-        this.noMessages = false;
-      }
-
-      unsubscribeFromChat = await subscribeToChatNewMessages(
-        this.myUser.id,
-        this.receiverId,
-        (msg) => this.messages.push(msg)
-      );
-    },
 
     async handleSendPrivateMessage(message) {
-      await sendChatMessage(
-        message.send_id,
-        message.receiver_id,
-        message.content
-      );
-    },
-  },
+  if (!this.chatId) {
+    const newChat = await createChat(this.myUser.id, this.receiverId);
+    this.chatId = newChat.id;
+
+  
+    unsubscribeFromChat = await subscribeToChatNewMessages(
+      this.myUser.id,     
+      this.receiverId,     
+      (msg) => {
+        this.messages.push(msg);
+      }
+    );
+  }
+
+  await sendChatMessage(
+    message.send_id,
+    message.receiver_id,
+    message.content
+  );
+
+  this.noMessages = false;
+}
+  }
 };
 </script>
 
@@ -101,8 +125,8 @@ export default {
 
       <ol class="flex flex-col gap-4">
         <li
-          v-for="(msg, index) in messages"
-          :key="index"
+          v-for="msg in messages"
+          :key="msg.id"
           :class="{
             'bg-blue-300 self-end text-right': msg.send_id === myUser?.id,
             'bg-white self-start text-left': msg.send_id !== myUser?.id,
