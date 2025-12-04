@@ -1,17 +1,14 @@
 <script>
-import {
-  fechtAllUserProfiles,
-  
-} from "../../service/userService.js";
+import { fechtAllUserProfiles } from "../../service/userService.js";
 import AppLoaders from "../estilos/AppLoaders.vue";
+import { getFileURL } from "../../service/storage.js";
 
 export default {
   name: "AppListUser",
   components: { AppLoaders },
 
   props: {
-    selectMode: { type: Boolean, default: false }, 
-    
+    selectMode: { type: Boolean, default: false },
   },
 
   data() {
@@ -28,12 +25,11 @@ export default {
   },
 
   methods: {
+    getFileURL,
     handleClick(user) {
       if (this.selectMode) {
-      
         this.$emit("select-user", user.id);
       } else {
-        
         this.$router.push({ name: "perfil", params: { id: user.id } });
       }
     },
@@ -43,8 +39,6 @@ export default {
 
 <template>
   <section class="relative min-h-screen">
-
-  
     <div
       v-if="loading"
       class="fixed inset-0 flex items-center justify-center bg-black/40 z-50"
@@ -61,16 +55,20 @@ export default {
         <li
           v-for="user in users"
           :key="user.id"
-          class="p-3 border border-lime-500 rounded-md bg-lime-50 hover:bg-lime-200 cursor-pointer"
+          class="p-2 border border-lime-500 rounded-md bg-lime-50 hover:bg-lime-200 cursor-pointer flex items-center gap-3"
           @click="handleClick(user)"
         >
-          <p class="font-medium text-lime-900">
+          <img
+            :src="user.avatar ? getFileURL(user.avatar) : '/avatar-de-usuario.png'"
+            alt="Avatar"
+            class="w-16 h-16 rounded-full object-cover border-2 border-white"
+          />
+
+          <p class="font-medium text-lime-900 text-m">
             {{ user.display_name || "Usuario" }}
           </p>
-          <p class="text-sm text-gray-600">{{ user.email }}</p>
         </li>
       </ul>
     </div>
-
   </section>
 </template>

@@ -35,7 +35,6 @@ async handleRegister() {
       return;
     }
 
-    // ✔ Registro exitoso
     this.$router.push("/mi_perfil");
 
   } catch (error) {

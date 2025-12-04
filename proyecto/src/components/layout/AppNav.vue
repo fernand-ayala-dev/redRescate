@@ -3,6 +3,7 @@ import {
   subscribeToAuthStateChanges,
   logout,
 } from "../../service/authService.js";
+import { getFileURL } from "../../service/storage.js";
 
 export default {
   name: "AppNav",
@@ -11,11 +12,14 @@ export default {
       user: {
         id: null,
         email: null,
-        avata: null,
+        avatar: null,
+        display_name: null
+        
       },
     };
   },
   methods: {
+    getFileURL,
     handleLogout() {
       logout();
 
@@ -94,9 +98,8 @@ export default {
             <li>
               <RouterLink
                 v-if="user"
-              
                 :to="`/chats/${user.id}`"
-                 class="rounded-md px-3 py-2 text-lg font-medium hover:bg-lime-600"
+                class="rounded-md px-3 py-2 text-lg font-medium hover:bg-lime-600"
               >
                 Ir al chat
               </RouterLink>
@@ -110,13 +113,14 @@ export default {
                 >
                   <img
                     :src="
-                      user.avatar ||
-                      'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+                      user.avatar
+                        ? getFileURL(user.avatar)
+                        : '/avatar-de-usuario.png'
                     "
                     alt="avatar"
-                    class="h-6 w-6 rounded-full border border-lime-200 object-cover"
+                    class="h-8 w-8 rounded-full border border-lime-200 object-cover"
                   />
-                  {{ user.email }} | Cerrar sesión
+                  {{ user.display_name || user.email }} | Cerrar sesión
                 </button>
               </form>
             </li>

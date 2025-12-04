@@ -63,13 +63,13 @@ export default {
 </script>
 
 <template>
-  <div class="bg-white rounded-xl p-4 shadow-md">
+  <div class="bg-lime-100 rounded-xl p-4 shadow-md">
 
     <div v-if="errorMessage" class="bg-red-500 text-white p-2 rounded text-sm mb-2">
       {{ errorMessage }}
     </div>
 
-    <div v-if="trueMessage" class="bg-green-500 text-white p-2 rounded text-sm mb-2">
+    <div v-if="trueMessage" class="bg-lime-800 text-white p-2 rounded text-sm mb-2">
       {{ trueMessage }}
     </div>
 

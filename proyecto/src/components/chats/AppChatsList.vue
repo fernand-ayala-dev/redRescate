@@ -108,28 +108,25 @@ export default {
   }
 };
 </script>
-
 <template>
   <div class="flex gap-4">
     <div
-      class="w-full p-4 bg-gray-100 rounded-3xl shadow-inner h-[90vh] overflow-y-auto"
+      class="w-full p-4 bg-gray-900 rounded-3xl shadow-inner h-[90vh] flex flex-col"
     >
+     
       <div class="flex items-center gap-3 mb-4">
         <div>
-          <h2 class="text-xl font-semibold">
-            Chat con {{ otherUser?.display_name || "Usuario" }}
-          </h2>
-          <p class="text-sm text-gray-500">{{ otherUser?.email }}</p>
+          <p class="text-sm text-lime-500"> Chat con {{ otherUser?.email }}</p>
         </div>
       </div>
 
-      <ol class="flex flex-col gap-4">
+      <ol class="flex-1 overflow-y-auto flex flex-col gap-4 mb-4">
         <li
           v-for="msg in messages"
           :key="msg.id"
           :class="{
-            'bg-blue-300 self-end text-right': msg.send_id === myUser?.id,
-            'bg-white self-start text-left': msg.send_id !== myUser?.id,
+            'bg-lime-200 self-end text-right rounded-br-none': msg.send_id === myUser?.id,
+            'bg-white self-start text-left rounded-bl-none': msg.send_id !== myUser?.id,
           }"
           class="p-3 rounded-xl shadow-md w-fit max-w-[70%]"
         >
@@ -140,10 +137,14 @@ export default {
         </li>
       </ol>
 
-      <AppChatsForm
-        :receiverId="receiverId"
-        @send-private-message="handleSendPrivateMessage"
-      />
+   
+      <div>
+        <AppChatsForm
+          :receiverId="receiverId"
+          @send-private-message="handleSendPrivateMessage"
+        />
+      </div>
     </div>
   </div>
 </template>
+

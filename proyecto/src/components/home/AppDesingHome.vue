@@ -97,7 +97,7 @@ export default {
 
         <div class="">
           <img
-            src="https://www.lifeder.com/wp-content/uploads/2019/03/flora-y-fauna-de-Misiones-Argentina.jpg"
+            src="/banner2.jpg"
             alt="Banner: flora y fauna de Misiones"
             class="w-full h-64 sm:h-80 md:h-96 object-cover rounded-xl shadow-lg"
           />
@@ -207,7 +207,7 @@ export default {
           class="flex-shrink-0 w-16 h-16 rounded-md bg-emerald-100 grid place-items-center font-bold"
         >
           <img
-            src="https://scontent-atl3-1.xx.fbcdn.net/v/t51.75761-15/486087195_18392343997109702_6017100678213085116_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeGv0fvWygJIUd0rr04sBs8dl4-d0soRcJCXj53SyhFwkKBhnoPj7TZe5ZaR2_lWtpE&_nc_ohc=MNmaPXzzVzcQ7kNvwHzcQiZ&_nc_oc=AdksLlao2e1qqSwKPIuTE3EMh7F5jCk6sPilbPvHIu1Kllb8JKkh3JR6ujIEOjqh8Vk&_nc_zt=23&_nc_ht=scontent-atl3-1.xx&edm=AKIiGfEEAAAA&_nc_gid=Aohcq3jEeiLYjg8gMSo2ew&oh=00_AfcSNzaaBsd8EijU0GmuVf0OuIt9fW8U-9ofuMqAChfF8Q&oe=68EC917D"
+            src="/guiraoga.png"
             alt="Guiraoga"
           />
         </div>
@@ -227,8 +227,8 @@ export default {
           class="flex-shrink-0 w-16 h-16 rounded-md bg-emerald-100 grid place-items-center font-bold"
         >
           <img
-            src="https://i0.wp.com/www.canal12misiones.com/wp-content/uploads/2023/06/ohana.jpg?resize=1089%2C730&ssl=1"
-            alt="Guiraoga"
+            src="/ohana.jpg"
+            alt="ohana"
           />
         </div>
         <div>

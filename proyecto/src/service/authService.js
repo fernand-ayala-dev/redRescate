@@ -1,5 +1,6 @@
 import { supabase } from "./supabase";
 import { getUserProfileById, createUserProfile,updateUserProfile } from "./userService.js";
+import { uploadFile, deleteFile, getFileURL, inferExtensionFromMIME } from "./storage";
 
 let user = {
   id: null,
@@ -115,6 +116,7 @@ export async function logout() {
      display_name: null,
     biografia: null,
     avatar: null,
+ 
   });
 }
 
@@ -122,12 +124,37 @@ export async function updateAuthProfile(data) {
   try {
     await updateUserProfile(user.id, data);
 
-    setUser(data);
+   setUser({
+      ...user,
+      ...data,
+    });
   } catch (error) {
     console.error("Error al actualizar usuario:", error.er);
   }
 }
 
+export async function updateAuthUserAvatar(file) {
+  try { 
+    const ext = inferExtensionFromMIME(file.type);
+    const avatar = `${user.id}/${crypto.randomUUID()}.${ext}`;
+
+   
+    await uploadFile(avatar, file);
+   
+    if (user.avatar) {
+      await deleteFile(user.avatar);
+    }
+
+    
+    await updateUserProfile(user.id, { avatar: avatar });
+    
+    setUser({ avatar: avatar });
+
+  } catch (error) {
+    console.error(error);
+    throw new Error("No se pudo actualizar el avatar");
+  }
+}
 
 /**
  * Observer

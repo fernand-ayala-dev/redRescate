@@ -3,8 +3,9 @@ import { subscribeToAuthStateChanges } from "../../service/authService.js";
 import {
   fetchUserPostMessages,
   sendNewGlobalPostMessages,
-  subscribeGlobalPostMessages
+  subscribeGlobalPostMessages,
 } from "../../service/postService.js";
+import { getFileURL } from "../../service/storage.js";
 import AppH1 from "../estilos/AppH1.vue";
 import AppH2 from "../estilos/AppH2.vue";
 import AppPostForm from "../posts/AppPostForm.vue";
@@ -28,6 +29,7 @@ export default {
   },
 
   methods: {
+    getFileURL,
     async handleSendMessage(message) {
       try {
         await sendNewGlobalPostMessages(message);
@@ -38,7 +40,6 @@ export default {
   },
 
   async mounted() {
-    
     unsubscribeFromAuth = subscribeToAuthStateChanges(async (userState) => {
       if (!userState || !userState.id) {
         this.user = null;
@@ -64,23 +65,18 @@ export default {
 
 <template>
   <AppH2 class="sr-only">Mi perfil</AppH2>
-  <section
-    class="p-6 bg-[url('https://files.worldwildlife.org/wwfcmsprod/images/Jaguar_Brazil/story_full_width/17z0nhnt2v__WW214751.jpg')] bg-cover bg-no-repeat bg-top"
-  >
+  <section class="p-6 bg-[url('/banner.jpg')] bg-cover bg-no-repeat bg-top">
     <div
       class="bg-lime-200/50 rounded-xl shadow-md p-6 border border-gray-200 max-w-3xl mx-auto"
     >
       <div class="flex gap-4 m-6">
         <div class="w-3/12 bg-amber-100 p-4 mx-auto text-center">
-          <!-- Avatar -->
           <img
-            :src="
-              user.avatar ??
-              'https://cdn-icons-png.flaticon.com/512/149/149071.png'
-            "
+            :src="getFileURL(user.avatar || '/avatar-de-usuario.png')"
             alt="Avatar"
             class="w-28 h-28 rounded-full object-cover border-4 border-white mx-auto"
           />
+
           <span class="text-xl font-semibold text-gray-800 mb-1">
             {{ user.display_name ?? "Sin especificar..." }}
           </span>
@@ -96,7 +92,6 @@ export default {
         </div>
 
         <div class="w-9/12 p-4 shadow-md bg-lime-200/90">
-          <!-- Biografía -->
           <span class="text-lg font-medium text-gray-700 mb-1">Biografía</span>
           <p class="text-gray-600 italic">
             {{ user.biografia ?? "Sin especificar..." }}
@@ -126,12 +121,9 @@ export default {
             <div class="flex items-center justify-between mb-3">
               <div class="flex items-center gap-3">
                 <img
-                  :src="
-                    message.avatar ??
-                    'nada'
-                  "
-                  alt="avatar"
-                  class="w-10 h-10 rounded-full object-cover border border-gray-200"
+                  :src="getFileURL(user.avatar || '/avatar-de-usuario.png')"
+                  alt="Avatar"
+                  class="w-28 h-28 rounded-full object-cover border-4 border-white mx-auto"
                 />
                 <div>
                   <p class="font-semibold text-gray-800">
@@ -152,10 +144,8 @@ export default {
         </ol>
       </div>
     </div>
-  
     <div class="w-3/12 mt-4">
       <AppPostForm @send-message="handleSendMessage" />
-      
     </div>
   </section>
 </template>
