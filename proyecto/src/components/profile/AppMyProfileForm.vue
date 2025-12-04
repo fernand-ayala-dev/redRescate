@@ -5,7 +5,7 @@ import {
   sendNewGlobalPostMessages,
   subscribeGlobalPostMessages,
 } from "../../service/postService.js";
-import { getFileURL } from "../../service/storage.js";
+import { getFileURL, getFileURLPost } from "../../service/storage.js";
 import AppH1 from "../estilos/AppH1.vue";
 import AppH2 from "../estilos/AppH2.vue";
 import AppPostForm from "../posts/AppPostForm.vue";
@@ -30,6 +30,7 @@ export default {
 
   methods: {
     getFileURL,
+    getFileURLPost,
     async handleSendMessage(message) {
       try {
         await sendNewGlobalPostMessages(message);
@@ -72,7 +73,9 @@ export default {
       <div class="flex gap-4 m-6">
         <div class="w-3/12 bg-amber-100 p-4 mx-auto text-center">
           <img
-            :src="getFileURL(user.avatar || '/avatar-de-usuario.png')"
+            :src="
+              user.avatar ? getFileURL(user.avatar) : '/avatar-de-usuario.png'
+            "
             alt="Avatar"
             class="w-28 h-28 rounded-full object-cover border-4 border-white mx-auto"
           />
@@ -100,9 +103,11 @@ export default {
       </div>
     </div>
   </section>
-  <section class="flex gap-4 mt-5">
+
+
+  <section class="flex gap-4 mt-5"> 
     <div class="w-9/12">
-      <div v-if="messages.length === 0" class="text-gray-500">
+      <div v-if="messages.length === 0" class="text-gray-500 text-center py-6">
         Este usuario no tiene publicaciones aún.
       </div>
 
@@ -118,32 +123,42 @@ export default {
             :key="message.id"
             class="p-5 bg-white rounded-xl shadow-sm w-full border border-gray-100"
           >
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-3">
-                <img
-                  :src="getFileURL(user.avatar || '/avatar-de-usuario.png')"
-                  alt="Avatar"
-                  class="w-28 h-28 rounded-full object-cover border-4 border-white mx-auto"
-                />
-                <div>
-                  <p class="font-semibold text-gray-800">
-                    {{ message.email }}
-                  </p>
-                  <p class="text-xs text-gray-500">
-                    Publicó el
-                    {{ new Date(message.created_at).toLocaleString() }}
-                  </p>
+            <div class="flex items-start gap-4 mb-3">
+            
+              <img
+                :src="getFileURL(user.avatar || '/avatar-de-usuario.png')"
+                alt="Avatar"
+                class="w-28 h-28 rounded-full object-cover border-4 border-white"
+              />
+
+              <div class="flex-1">
+              
+                <p class="font-semibold text-gray-800">{{ message.email }}</p>
+                <p class="text-xs text-gray-500 mb-2">
+                  Publicó el {{ new Date(message.created_at).toLocaleString() }}
+                </p>
+
+              
+                <div class="text-gray-700 text-base leading-relaxed">
+                  {{ message.content }}
+                </div>
+
+            
+                <div v-if="message.file_post" class="mt-3">
+                  <img
+                    :src="getFileURLPost(message.file_post)"
+                    alt="Archivo adjunto"
+                    class="max-w-full h-auto rounded-lg shadow-md"
+                  />
                 </div>
               </div>
-            </div>
-
-            <div class="text-gray-700 text-base leading-relaxed">
-              {{ message.content }}
             </div>
           </li>
         </ol>
       </div>
     </div>
+
+  
     <div class="w-3/12 mt-4">
       <AppPostForm @send-message="handleSendMessage" />
     </div>

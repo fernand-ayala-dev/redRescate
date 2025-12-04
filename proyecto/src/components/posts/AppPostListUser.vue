@@ -4,10 +4,12 @@ import { getUserProfileById } from "../../service/userService.js";
 import { getFileURLPost } from "../../service/storage.js";
 
 import AppH2 from "../estilos/AppH2.vue";
+import AppLoaders from "../estilos/AppLoaders.vue";
+let unsubscribe = () => {};
 
 export default {
   name: "AppPostListUser",
-  components: { AppH2 },
+  components: { AppH2, AppLoaders },
 
   data() {
     return {
@@ -25,14 +27,27 @@ export default {
     const id = this.$route.params.id;
     this.loading = true;
 
+    this.user = await getUserProfileById(id);
+
+    this.messages = await fetchUserPostMessages(id);
+
+    this.unsubscribe = subscribeGlobalPostMessages((newMessage) => {
+      if (newMessage.send_id === id) {
+        this.messages.unshift(newMessage);
+      }
+    });
     try {
       this.user = await getUserProfileById(id);
-      this.messages = await fetchUserPostMessages(id); // traer posts del usuario
+      this.messages = await fetchUserPostMessages(id);
     } catch (error) {
       console.error("Error al cargar publicaciones del usuario:", error);
     } finally {
       this.loading = false;
     }
+  },
+
+  unmounted() {
+    unsubscribe();
   },
 };
 </script>
@@ -43,11 +58,18 @@ export default {
       Publicaciones de {{ user?.display_name || "usuario" }}
     </AppH2>
 
-    <div v-if="loading" class="text-center text-gray-500">Cargando publicaciones...</div>
+    <div v-if="loading" class="text-center text-gray-500">
+      <AppLoaders />
+    </div>
 
     <div v-else>
-      <div v-if="messages.length === 0" class="text-gray-500 text-center mt-4">
-        Este usuario no tiene publicaciones aún.
+      <div
+        v-if="messages.length === 0"
+        class="text-lime-900 text-center mt-6 p-6 bg-lime-100/60 border border-lime-300 rounded-xl shadow-sm"
+      >
+        <p class="font-medium text-lg">
+          Este usuario no tiene publicaciones aún.
+        </p>
       </div>
 
       <div

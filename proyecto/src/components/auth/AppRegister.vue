@@ -14,10 +14,11 @@ export default {
 
       loading: false,
       errorMessage: "",
+      trueMessage: "",
     };
   },
   methods: {
-async handleRegister() {
+   async handleRegister() {
   this.errorMessage = "";
 
   if (!this.user.email || !this.user.password) {
@@ -35,6 +36,11 @@ async handleRegister() {
       return;
     }
 
+    this.trueMessage = "Registrado con éxito";
+
+    console.log("Usuario creado:", result.user);
+
+  
     this.$router.push("/mi_perfil");
 
   } catch (error) {
@@ -50,49 +56,60 @@ async handleRegister() {
 </script>
 
 <template>
-  <section
-    class="flex w-100 flex-col my-5 justify-center items-center mx-auto p-4 rounded-2xl bg-lime-800/35"
+  <div
+    class="h-screen flex items-center justify-center px-4 p-6 bg-[url('/banner2.jpg')] bg-cover bg-no-repeat bg-center"
   >
-    <div class="w-70">
-      <img
-        src="/logo-selva.png"
-        alt="Red Rescate"
-        class="mx-auto h-25 w-auto"
-      />
-      <AppH2 class="text-center text-2xl font-bold text-white">
-        Comunidad Red Rescate
-      </AppH2>
-    </div>
-    <div
-      v-if="errorMessage"
-      class="bg-red-600 rounded-md p-2 mt-2 text-white text-center text-sm"
+    <section
+      class="flex w-full max-w-md flex-col justify-center mx-auto items-center p-4 rounded-2xl bg-lime-700/55"
     >
-      {{ errorMessage }}
-    </div>
-    <div class="w-80">
-      <form action="#" @submit.prevent="handleRegister">
-        <div class="mb-4">
-          <label for="email" class="block mb-1">Email</label>
-          <input
-            type="email"
-            id="email"
-            class="w-full p-2 border bg-lime-100 border-gray-300 rounded hover:bg-amber-50 focus:bg-amber-100"
-            v-model="user.email"
-          />
-        </div>
-        <div class="mb-4">
-          <label for="password" class="block mb-1">Contraseña</label>
-          <input
-            type="password"
-            id="password"
-            class="w-full p-2 border bg-lime-100 border-gray-300 rounded hover:bg-amber-50 focus:bg-amber-100"
-            v-model="user.password"
-          />
-        </div>
-        <AppButton class="w-full" :disabled="loading">
-          {{ loading ? "Registrando..." : "Registrarse" }}
-        </AppButton>
-      </form>
-    </div>
-  </section>
+      <div class="w-70">
+        <img
+          src="/logo-selva.png"
+          alt="Red Rescate"
+          class="mx-auto h-25 w-auto"
+        />
+        <AppH2 class="text-center text-2xl font-bold text-white">
+          Comunidad Red Rescate
+        </AppH2>
+      </div>
+      <div
+        v-if="errorMessage"
+        class="bg-red-600 rounded-md p-2 mt-2 text-white text-center text-sm"
+      >
+        {{ errorMessage }}
+      </div>
+      <div class="w-80">
+        <form action="#" @submit.prevent="handleRegister">
+          <div class="mb-4">
+            <label for="email" class="block mb-1">Email</label>
+            <input
+              type="email"
+              id="email"
+              class="w-full p-2 border bg-lime-100 border-gray-300 rounded hover:bg-amber-50 focus:bg-amber-100"
+              v-model="user.email"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="password" class="block mb-1">Contraseña</label>
+            <input
+              type="password"
+              id="password"
+              class="w-full p-2 border bg-lime-100 border-gray-300 rounded hover:bg-amber-50 focus:bg-amber-100"
+              v-model="user.password"
+            />
+          </div>
+          <AppButton class="w-full" :disabled="loading">
+            {{ loading ? "Registrando..." : "Registrarse" }}
+          </AppButton>
+
+          <div
+            v-if="trueMessage"
+            class="mt-4 bg-lime-600/90 text-white text-center p-2 rounded-md text-sm shadow-md"
+          >
+            {{ trueMessage }}
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
 </template>

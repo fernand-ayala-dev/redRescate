@@ -35,10 +35,10 @@ export default {
 </script>
 
 <template>
-  <div class="flex h-screen bg-gray-900">
+  <div class="flex h-screen bg-gray-900 mt-5">
 
     <div class="w-3/12 bg-lime-900 shadow-xl p-4 overflow-y-auto">
-      <h2 class="text-xl font-bold mb-4">Usuarios</h2>
+      
 
       <AppListUser select-mode @select-user="handleSelectUser" />
 

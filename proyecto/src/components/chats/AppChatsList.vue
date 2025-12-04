@@ -30,20 +30,7 @@ export default {
       noMessages: false,
     };
   },
-
-  mounted() {
-    subscribeToAuthStateChanges(async (user) => {
-      if (!user) return;
-      this.myUser = user;
-      await this.initializeChat();
-    });
-  },
-
-  unmounted() {
-    unsubscribeFromChat();
-  },
-
-  methods: {
+ methods: {
    async initializeChat() {
   if (!this.myUser || !this.receiverId) return;
 
@@ -105,8 +92,21 @@ export default {
 
   this.noMessages = false;
 }
-  }
-};
+  },
+
+  mounted() {
+    subscribeToAuthStateChanges(async (user) => {
+      if (!user) return;
+      this.myUser = user;
+      await this.initializeChat();
+    });
+  },
+
+  unmounted() {
+     unsubscribeFromChat();
+  },
+}
+ 
 </script>
 <template>
   <div class="flex gap-4">

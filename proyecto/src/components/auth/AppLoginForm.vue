@@ -40,15 +40,18 @@ export default {
 </script>
 
 <template>
- <div class="min-h-screen flex items-center justify-center px-4">
+ <div class="h-screen flex items-center justify-center px-4 p-6 bg-[url('/banner.jpg')] bg-cover bg-no-repeat bg-top">
+
+  
   <section
-    class="flex w-full max-w-md flex-col my-5 justify-center mx-auto items-center p-4 rounded-2xl bg-lime-800/55"
-  >
+  class="flex w-full max-w-md flex-col justify-center mx-auto items-center p-4 rounded-2xl bg-lime-700/55"
+>
+
     <div class="w-70">
       <img
         src="/logo-selva.png"
         alt="Logo red rescate"
-        class="mx-auto h-30 w-auto"
+        class="mx-auto h-25 w-auto"
       />
       <AppH2 class="text-center text-2xl font-bold text-white">
         Ingresá a tu cuenta

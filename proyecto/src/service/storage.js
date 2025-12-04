@@ -34,14 +34,13 @@ export async function deleteFile(name, bucket = 'avatars') {
   }
 }
 
-export async function uploadFilePost(name, file, userId, bucket = "file_post") {
-  const filePath = `${userId}/${name}`;
-  const { data, error } = await supabase.storage.from(bucket).upload(filePath, file);
-  if (error) throw error;
-  return data.path;
+export async function uploadFilePost(name, file, bucket = "file_post") {
+    const { error } = await supabase.storage
+        .from(bucket)
+        .upload(name, file);
+
+    if (error) throw error;
 }
-
-
 
 export function getFileURLPost(name, bucket = "file_post") {
   

@@ -1,10 +1,5 @@
 import { supabase } from "./supabase";
-import {
- 
-  deleteFilePost,
-  inferExtensionFromMIME,
-} from "./storage";
-
+import { deleteFilePost, inferExtensionFromMIME } from "./storage";
 
 export async function sendNewGlobalPostMessages({
   send_id,
@@ -52,7 +47,6 @@ export async function fetchUserPostMessages(userId) {
   return data;
 }
 
-
 export async function updatePostContent(postId, sendId, content) {
   const { data, error } = await supabase
     .from("global_publicaciones_messages")
@@ -69,6 +63,7 @@ export async function updatePostContent(postId, sendId, content) {
   return data;
 }
 
+
 export async function uploadPostImage(file, userId) {
   try {
     if (!file) throw new Error("No hay archivo para subir");
@@ -84,27 +79,23 @@ export async function uploadPostImage(file, userId) {
 
     return fileName;
 
-  } catch (error) {
-    console.error("Error al cargar imagen", error.message);
-    throw new Error("No se pudo subir la imagen");
+  } catch (e) {
+    console.error("Error al cargar imagen", e);
+    throw e;
   }
 }
 
 
-export async function updatePostFile(postId, userId, oldFile, file) {
+export async function updatePostFile(postId, userId, oldFile, newFile) {
   try {
-    if (!file) {
-      console.warn("No hay archivo para actualizar");
-      return;
-    }
-   
-    const newFilePath = await uploadPostImage(file, userId);
+    if (!newFile) return;
+
+    const newFilePath = await uploadPostImage(newFile, userId);
 
     if (oldFile) {
       await deleteFilePost(oldFile);
     }
 
-    
     const { data, error } = await supabase
       .from("global_publicaciones_messages")
       .update({ file_post: newFilePath })
@@ -121,7 +112,6 @@ export async function updatePostFile(postId, userId, oldFile, file) {
     throw new Error("No se pudo actualizar el archivo del post");
   }
 }
-
 
 export async function deletePost(post) {
   try {
@@ -146,35 +136,37 @@ export async function deletePost(post) {
 
 export async function fetchPostComments(postId) {
   const { data, error } = await supabase
-    .from('post_comments')
-    .select('*')
-    .eq('post_id', postId)
-    .order('created_at', { ascending: true });
-
-  if (error) throw error;
-  return data;
-}
-
-// Crear un comentario
-export async function sendPostComment({ postId, userId, content }) {
-  const { data, error } = await supabase
-    .from('post_comments')
-    .insert([{ post_id: postId, user_id: userId, content }])
+    .from("comment_post")
     .select()
-    .single();
+    .eq("post_id", postId)
+    .order("created_at", { ascending: true });
 
   if (error) throw error;
   return data;
 }
 
-// Suscripción en tiempo real (opcional)
+export async function sendPostComment({ postId, userId, content }) {
+  return await supabase.from("comment_post").insert({
+    post_id: postId,
+    user_id: userId,
+    content,
+  });
+}
+
 export function subscribePostComments(postId, callback) {
   return supabase
-    .from(`post_comments:post_id=eq.${postId}`)
-    .on('INSERT', payload => callback(payload.new))
+    .channel(`comment_post_${postId}`)
+    .on(
+      "postgres_changes",
+      {
+        event: "INSERT",
+        table: "comment_post",
+        filter: `post_id=eq.${postId}`,
+      },
+      (payload) => callback(payload.new)
+    )
     .subscribe();
 }
-
 
 export function subscribeGlobalPostMessages(callback) {
   const chatChannel = supabase.channel("global_publicaciones_messages");
@@ -190,8 +182,8 @@ export function subscribeGlobalPostMessages(callback) {
       callback(payload.new);
     }
   );
-chatChannel.on(
-   "postgres_changes",
+  chatChannel.on(
+    "postgres_changes",
     {
       event: "DELETE",
       table: "global_publicaciones_messages",
@@ -201,8 +193,8 @@ chatChannel.on(
       callback(payload.new);
     }
   );
-chatChannel.on(
-   "postgres_changes",
+  chatChannel.on(
+    "postgres_changes",
     {
       event: "UPDATE",
       table: "global_publicaciones_messages",

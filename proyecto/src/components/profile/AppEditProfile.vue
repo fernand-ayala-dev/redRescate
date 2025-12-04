@@ -81,8 +81,10 @@ export default {
 
 <template>
   <section
+
     class="bg-lime-200 rounded-xl shadow-md p-6 border border-gray-200 max-w-3xl mx-auto"
   >
+    <h2>Editando mi perfil</h2>
     <div
       v-if="trueMessage"
       class="bg-green-500 rounded-md p-2 mt-2 text-white text-center text-sm"
@@ -96,13 +98,13 @@ export default {
           for="avatar"
           class="block text-sm font-medium text-gray-700 mb-2"
         >
-          Avatar
+          
         </label>
 
         <div v-if="avatarPreview" class="mt-3 flex justify-center mb-4">
           <img
             :src="avatarPreview"
-            class="w-40 h-40 rounded-full object-cover border-4 border-lime-500 shadow-md"
+            class="w-50 h-50  object-cover border-4 border-lime-500 shadow-md"
           />
         </div>
         <label

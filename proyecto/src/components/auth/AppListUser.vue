@@ -1,8 +1,10 @@
 <script>
+import { supabase } from "../../service/supabase.js";
 import { fechtAllUserProfiles } from "../../service/userService.js";
 import AppLoaders from "../estilos/AppLoaders.vue";
 import { getFileURL } from "../../service/storage.js";
 
+let unsubscribeFromChat = () => {};
 export default {
   name: "AppListUser",
   components: { AppLoaders },
@@ -34,6 +36,9 @@ export default {
       }
     },
   },
+  unmounted() {
+    unsubscribeFromChat();
+  },
 };
 </script>
 
@@ -59,13 +64,14 @@ export default {
           @click="handleClick(user)"
         >
           <img
-            :src="user.avatar ? getFileURL(user.avatar) : '/avatar-de-usuario.png'"
+            :src="
+              user?.avatar ? getFileURL(user.avatar) : '/avatar-de-usuario.png'
+            "
             alt="Avatar"
             class="w-16 h-16 rounded-full object-cover border-2 border-white"
           />
-
           <p class="font-medium text-lime-900 text-m">
-            {{ user.display_name || "Usuario" }}
+            {{ user.display_name || user.email }}
           </p>
         </li>
       </ul>

@@ -62,11 +62,19 @@ export async function register(email, password) {
   try {
     const { data, error } = await supabase.auth.signUp({ email, password });
 
-    if (error) {
-      return { ok: false, message: error.message };
-    }
+    if (error) return { ok: false, message: error.message };
 
-    return { ok: true, user: data.user };
+    // Crear perfil vacío en tu tabla de usuarios
+    const newProfile = {
+      id: data.user.id,
+      email: data.user.email,
+      display_name: "",
+      avatar: null,
+      biografia: "",
+    };
+    await createUserProfile(newProfile); setUser(newProfile);
+
+    return { ok: true, user: newProfile };
 
   } catch (err) {
     return { ok: false, message: "Error inesperado en el registro." };
@@ -160,7 +168,7 @@ export async function updateAuthUserAvatar(file) {
  * Observer
  *Registrar al usuario
  * @param {(userState: {id: String|null, email: String|null}) => void} callback
- * @returns {() => void} Función para cancelar la suscripción.
+ * @returns {() => void} 
  */
 
 export function subscribeToAuthStateChanges(callback) {

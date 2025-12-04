@@ -9,7 +9,7 @@ export default {
 </script>
 
 <template>
-<AppH1>Actualizar mi perfil</AppH1>
+<AppH1 class="sr-only">Actualizar mi perfil</AppH1>
 
 <AppEditProfile></AppEditProfile>
 </template>
